@@ -1,0 +1,242 @@
+[ 유닛 unit ]
+	이름 name			=	메크 이름 mech . name
+	내구도 durability		=	파츠별 내구도 총합 head . durability + torso . durability + arm . durability + leg . durability
+	방패 내구도 shield health	=	방패 내구도 right/left weapon . shield durability
+	기동성 mobility		=	기본 기동성 * ( extar power / total weight ) * 밸런스
+					기본 기동성 base mobility	= 고정 값
+					extar power			= torso . output power - ( head . power + arm . power + leg . power + left weapon . power + right weapon . power)
+					total weight			= head . weight + torso . weight + arm . weight + leg . weight + left weapon . weight + right weapon . weight
+					밸런스 balance		= 고정 값
+	버프 목록 buff list
+		mech buff list	=	mech . torso . core circuit
+		pilot buff list		=	pilot . pilot trait
+		unit buff list		=	unit . buff	전투 중에 발생하는 단기적인 버프/디버프 리스트
+	우측 장비 right weapon
+		공격력 damage				=	weapon . damage(=공격력 * 버프/디버프) + weapon . fire damage(=화염 * 버프/디버프) + weapon . shock damage(=충격 * 버프/디버프)
+		명중률 accuracy				=	weapon . accuracy(=명중률 기본 공식) * pilot . pilot skill . melee/range skill
+		치명타 critical chance / critical boost	=	치명타 확률 / 치명타 배율 weapon . critical chance/critical boost
+		or ( 방패인 경우 weapon . is shield == true )
+		내구도 shield durability			=	방패 내구도 weapon . durability
+	우측 장비 right weapon
+		공격력 damage				=	weapon . damage(=공격력 * 버프/디버프) + weapon . fire damage(=화염 * 버프/디버프) + weapon . shock damage(=충격 * 버프/디버프)
+		명중률 accuracy				=	weapon . accuracy(=명중률 기본 공식) * pilot . pilot skill . melee/range skill
+		치명타 critical chance / critical boost	=	치명타 확률 / 치명타 배율 weapon . critical chance/critical boost
+		or ( 방패인 경우 weapon . is shield == true )
+		내구도 shield durability			=	방패 내구도 weapon . durability
+	조종사 pilot name	=	조종사 이름 pilot . name
+
+[ 조종사 pilot ]
+	이름 name
+	특성 pilot trait
+		저격수 sniper		:	초탄 정확도 숙련도에 버프
+		돌격병 frontline soldier	:	반동 제어 숙련도에 버프
+		무예 통달 martial master	:	근접 숙련도에 버프
+		통증 무시 defy pain	:	방어 숙련도에 버프
+		등등 추가 필요
+	기술 pilot skill
+		원거리 range skill
+			반동 제어 recoil control		=	연사 총기 명중률 보정
+			단발 명중률 one shot control	=	단발 총기 명중률 보정
+		근접 melee skill
+			한손 무기 숙련 one hand mastery	=	한손 무기 명중률 보정
+			양손 무기 숙련 two hand mastery	=	양손 무기 명중률 보정
+		방어 defense skill
+			방패 숙련 shield mastery	=	방패 착용 시 방어 확률 보정
+			충격 회복 shock recovery	=	유닛 데미지 감소 보정
+
+[ 메크 Mech ]
+	머리 head
+		이름
+		내구도
+		중량
+		필요 파워
+	몸통 torso
+		이름
+		내구도
+		중량
+		파워 출력 = 마석 등급 * 회로 구성 버프
+	코어 회로 core circuit : 등급에 따라 넣을 수 있는 개수 증가
+		회로 구성 = 내구도 및 출력 버프
+			순환 lv 1, 2, 3 = 출력 버프
+			방어막 lv 1, 2, 3 = 내구도 버프
+			경량 lv 1, 2, 3 = 이동 거리 버프
+			저항 lv 1, 2, 3 = 속성 저항 버프
+			마탄 lv 1, 2, 3 = 속성 데미지 버프
+			등등 => 세트 회로 버프. 조립을 완성하고 나서 유닛 속성에서 표시. 조립,교체에 있어서 비용을 지불하여 세트 버프에 대하여 비용이 발생하도록.
+					ex) 순환 1+2+3 : 출력&이동 버프. 내구도&속성저항 디버프.
+						방어막 1+2+3 = 내구포&저항 버프. 출력&이동 디버프.
+		마석 등급 = 기본 출력 값
+	팔
+		이름
+		내구도
+		중량
+		필요 파워
+	다리
+		이름
+		내구도
+		중량
+		필요 파워
+	좌측 장비
+		이름
+		중량
+		공격력
+		명중률
+		치명타
+		or (방패인 경우)
+		이름
+		중량
+		내구도
+	우측 장비
+		이름
+		중량
+		공격력
+		명중률
+		치명타
+		or (방패인 경우)
+		이름
+		중량
+		내구도
+
+[장비]
+	이름 name
+	근접 melee
+		중량 weight		= (날 길이 * 날 재질 밀도 * 날 중량에 대한 보정값) + (손잡이 길이 * 손잡이 재질 밀도 * 손잡이 중량에 대한 보정값)
+					= (property . blade . length * property . blade . material . density) + (property . handle . length * property . handle . material . density )
+		공격력 Damage	= (날 재질 레벨 * 날 종류에 대한 기본 데미지) * (날 길이 / 날 기본 길이) * (장치가 있는 경우 디버프)
+					= (property . blade . material . level * property . blade property . base damage) * (property . blade . length / property . blade . default length) * (gear property . pierce/shock/fire/cold/lightning . penalty)
+		화염 데미지		= gear property . fire . base damage
+		방패 추가 데미지	= gear property . shock . base damage
+		냉기 유무		= gear property . cold . existence
+		번개 유무		= gear property . lightning . existence
+		명중률 Accuracy	= ((손잡이 재질 레벨 보정값) + (날 종류에 대한 기본 명중률 * 명중률 버프/디버프)) * 손잡이 길이 / 손잡이 기본 길이)
+					= (property . handle . material . level * property . blade property . base accuracy) * (property . handle . length / property . handle . default length)
+		치명타 확률		= 
+		치명타 배율		= 
+		방패 무시 확률	= 
+
+		특성 property
+			날 blade
+				길이 length			:	특징에 따른 피해량 배율
+				기본 길이 default length	=	(blade property . minimum + blade property . maximum) / 2
+				재질 material
+					이름 name
+					레벨 level	:	피해량 레벨
+					밀도 density	:	중량
+			손잡이 handle
+				길이 length 			:	특징에 따른 명중률 배율
+				기본 길이 default length	:	명중률이 1배인 길이
+				재질 material
+					이름 name
+					레벨 level	:	명중률 레벨
+					밀도 density	:	중량
+			날 특징 blade property
+				도끼 axe
+					minimum length	:	날 길이 최소치
+					maximum length	:	날 길이 최대치
+					base damage	:	기본 데미지
+					base accuracy	:	기본 명중률
+				검 sword
+					위와 동일
+				창 spear
+					위와 동일
+			장치	gear property
+				없음 none		:	일반 피해 유지
+				관통 pierce		:	일반 피해 패널티, 방패 무시 확률 추가
+				충격 shock		:	일반 피해 패널티, 피격 대상이 방패를 착용한 경우에 추가 데미지
+				화염 fire		:	일반 피해 패널티, 화염 데미지 추가
+				냉기 cold		:	일반 피해 패널티, 일정 턴 동안 기동력 감소 디버프
+				번개 lightning	:	일반 피해 패널티, 일정 턴 동안 명중률 감소 디버프
+					패널티 penalty	:	일반 피해 패널티 값
+		
+	원거리 range
+		중량 weight		= (총열 길이 * 총열 중량 보정값 + 구경 * 구경 중량 보정값) * 재질 밀도
+					= (barrel * barrel correction + caliber * caliber correction) * material . density
+			barrel correction	: 총열 중량에 대한 보정값
+			caliber correction	: 구경 중량에 대한 보정값
+		공격력 damage	= (구경에 대한 보정값) + (기본 공격력 * 공격력 버프/디버프)
+					= (property . caliber) + (property . attack type . base damage * property . attack type . bullet property . penalty)
+						※ 발사회수에 따른 각 공격은 별도의 공격으로 취급한다.
+						※ 버프/디버프 종류
+							
+		화염 데미지		= property . attack type . bullet property . fire . base damage
+		방패 추가 데미지	= property . attack type . bullet property . shock . base damage
+		냉기 유무		= property . attack type . bullet property . cold . existence
+		번개 유무		= property . attack type . bullet property . lightning . existence
+		명중률 accuracy	= ( (총열 길이 보정값) + (기본 명중률 * 패시브 명중률 보정) ) / ( 1 + (장비에 따른 보정값) ^ (사격거리 - 유효사거리) )
+					= ( (property . barrel * property . barrel correction) + (property . attack type . base accuracy * passive accuracy correction) / ( 1 + (property . range correction) ^ (attck range - property . attack type . base range) )
+			패시브 명중률 보정값 passive accuracy correction	: 패시브 스킬에 의한 명중률 보정
+			※ 패시브 스킬에 의한 명중률 버프는 "기본 명중률 base accuracy"에 곱한다.
+			※ 필드에서 액티브 스킬 혹은 공격에 의한 버프/디버프는 total "명중률 accuracy"에 곱한다.
+		치명타 확률		= 100을 넘는 명중률 수치 Mathf.Clamp(accuracy - 100, 0, 100)
+		치명타 배율		= 
+		방패 무시 확률	= 
+
+		특성 property
+			재질 material
+				이름 name	:	재질 이름
+				레벨 level	:	총열 길이 및 구경에 대한 제약
+				밀도 density	:	중량
+			총열 길이 barrel : 명중률 보정
+			구경 caliber : 호환 탼약 결정 및 피해량 보정.
+				대 : 일반, 고폭
+				중 : 일반, 관통
+				소 : 일반
+			장전 방식 reload type
+				자동 : 1회 공격에 연발 사격
+				수동 : 정확도 보정
+				발사회수 : 1회 공격에 발사 회수
+			공격 방식 attack type
+				에너지 energy
+					필요 파워 required power
+					기본 공격력 base damage
+					기본 명중률 base accuracy
+					유효 사거리 base range
+				물리 physics
+					장탄수 magazine capacity
+					탄환 특징 bullet property
+						없음 none : 기본 피해량
+						탄환 종류 bullet type
+							없음 none		:	일반 피해 유지
+							관통 pierce		:	일반 피해 패널티, 방패 무시 확률 추가
+							충격 shock		:	일반 피해 패널티, 피격 대상이 방패를 착용한 경우에 추가 데미지
+							화염 fire		:	일반 피해 패널티, 화염 데미지 추가
+							냉기 cold		:	일반 피해 패널티, 일정 턴 동안 기동력 감소 디버프
+							번개 lightning	:	일반 피해 패널티, 일정 턴 동안 명중률 감소 디버프
+								패널티 penalty	: 일반 피해 패널티
+					기본 공격력 base damage
+					기본 명중률 base accuracy
+					유효 사거리 base range
+	방패
+		내구도 = 추가로 방어할 수 있는 내구도
+		피해 감소율 = 전체 피해 데미지 감소 보정
+		치명타 배율 감소율 = 치명타 시에 피해 배율에 대한 감소 보정
+
+[데미지]
+	기본 공식 = 공격력 * 버프/디버프 + 화염 * (화염 데미지에 대한)버프/디버프 + 충격 * (충격 데미지에 대한)버프/디버프
+	치명타 공식 = 공격력 * 버프 * 관통 피해
+	
+	기체 체력 = 기체 체력 - (기본 공식)
+	방패 체력 = 방패 체력 - (공격력 * 버프/디버프 + 화염 * (화염 데미지에 대한)버프/디버프 + 충격 * (충격 데미지에 대한)버프/디버프 * 2배)
+
+[명중률]
+	기본 공식 = (무기 종류에 대한) 조종사 숙련도 * 무기 집탄율(최대 1 최소 0) * ( 무기의 사정거리 / 거리 ) * 버프/디버프
+	치명타 확률 = 100 초과 명중 * 버프/디버프
+
+[무기 특성 설명]
+	근접 / 원거리
+	관통 / 관통탄	: 방패 무시 확률 추가
+				※	근접		:	접촉 시에 안정된 마나를 일정한 방향을 흐르게하여 방패 너머로 충격이 전해지도록 한다.
+					원거리	:	탄두에 강한 충격이 가해지면 내부에서 안정된 고압의 마나가 탄두방향으로 뿜어져 나와 짧은 거리에 피해를 준다.
+	충격 / 충격탄	: 방패에 추가 데미지
+				※	근접		:	접촉 시에 접촉 대상의 마나를 불안정한 상태로 유도한다.
+					원거리	:	탄두에 강한 충격이 가해지면 내부에 불안정한 마나가 풀려나와 잠식되도록 한다.
+								☆ 물질의 마나가 불안정한 상태가 되면 원형을 유지하지 못하고 다른 물질로 변환되지만, 기본적으로 생물 혹은 Mech에는 마나 안정화를 위한 기관이 있으므로, 안정화 기관의 범위를 벗어난 무생물 혹은 방패에만 효과가 있다.
+	화염 / 화염탄	: 턴 당 데미지
+				※	근접		:	주변의 마나를 사용하여 무기를 높은 온도로 유지하여, 접촉 상대방에게 발화를 유도한다.
+					원거리	:	충전된 마나를 사용하여 일정 시간 동안 높은 온도로 유지하여, 접촉 상대방에게 발화를 유도한다.
+	냉기 / 냉기탄	: 기동력 감소 => 디버프
+				※	근접		:	주변의 마나를 사용하여 무기를 낮은 온도로 유지하여, 접촉 상대방에게 동상을 유발한다.
+					원거리	:	충전된 마나를 사용하여 일정 시간 동안 낮은 온도로 유지하여, 접촉 상대방에게 동상을 유발한다.
+	번개 / 번개탄	: 명중률 감소 => 디버프
+				※	근접		:	주변의 마나를 사용하여 무기를 높은 전위로 유지하여, 접촉 상대방에게 감전으로 인한 교란을 유발한다.
+					원거리	:	충전된 마나를 사용하여 일정 시간 동안 높은 전위로 유지하여, 접촉 상대방에게 감전으로 인한 교란을 유발한다.

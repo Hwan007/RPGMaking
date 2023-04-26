@@ -1,0 +1,78 @@
+        public enum MeleeType
+        {
+            Axe,
+            Sword,
+            Spear
+        }
+
+        public class MeleeWeaponPart
+        {
+            public float Length;
+            public int MaterialLevel;
+        }
+        public WeaponType Type = WeaponType.Melee;
+        public MeleeType AttackPart;
+        public MeleeWeaponPart Handle;
+        public MeleeWeaponPart Blade;
+        public override string GetDescription()
+        {
+            string desc = base.GetDescription();
+
+            desc += "\n";
+            desc += $"Type : {Type} - {AttackPart}\n";
+            desc += $"Handle\n";
+            desc += $"   Length : {Handle.Length}\n";
+            desc += $"   Material Level : {Handle.MaterialLevel}\n";
+            desc += $"Blade\n";
+            desc += $"   Length : {Blade.Length}m\n";
+            desc += $"   Material Level : {Blade.MaterialLevel}m\n";
+
+            return desc;
+        }
+		
+		
+==========================
+
+        public enum BulletType
+        {
+            Normal,
+            Penetrate,
+            HighExplosiveFire,
+            HighExplosiveAcid,
+            HighExplosiveCold,
+            HighExplosiveElectricity
+        }
+
+        public enum ChamberSize
+        {
+            Small,
+            Medium,
+            Large
+        }
+
+        public enum LoaderType
+        {
+            Manual,
+            Automatic
+        }
+        public WeaponType Type = WeaponType.Range;
+        public float BarrelLength;
+        public ChamberSize Chamber;
+        public LoaderType Loader;
+        public int MaterialLevel;
+        public BulletType Bullet;
+
+        public override string GetDescription()
+        {
+            string desc = base.GetDescription();
+
+            desc += "\n";
+            desc += $"Type : {Type}\n";
+            desc += $"BarrelLength : {BarrelLength}\n";
+            desc += $"ChamberSize : {Chamber}\n";
+            desc += $"LoaderType : {Loader}\n";
+            desc += $"Material Level : {MaterialLevel}\n";
+            desc += $"BulletType : {Bullet}\n";
+
+            return desc;
+        }

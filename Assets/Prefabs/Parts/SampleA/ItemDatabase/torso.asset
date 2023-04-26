@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4026da926314b754c8c2ed79e105459b, type: 3}
+  m_Name: torso
+  m_EditorClassIdentifier: 
+  ItemName: Sample Body
+  ItemSprite: {fileID: 0}
+  Description: Sample for the Mech body part.
+  WorldObjectPrefab: {fileID: 6310482049111969388, guid: de6b5862284528c428ed308034fa6a97, type: 3}
+  Stats:
+    Health: 1
+    Armour: 1
+  Slots:
+  - {fileID: 8740554676323429155}
+  EquippedEffects: []
+--- !u!114 &8740554676323429155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe2808b96833a74c96aacfe76c54322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Description: 
+  PartSlot: 1
+  Modifier:
+    ModifierMode: 1
+    Stats:
+      health: 0
+      power: 0
+      requiredPower: 0
+      defense: 0
+      elementalProtection: 0000000000000000000000000000000000000000
+      elementalBoosts: 0000000000000000000000000000000000000000
+  OutputPower: 0
+  CoreSlot: 0

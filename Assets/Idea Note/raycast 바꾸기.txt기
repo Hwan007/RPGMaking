@@ -1,0 +1,77 @@
+That's because the Physics.Raycast method in Unity does not work with UI elements such as UI Image. To detect UI elements as raycast targets, you need to use the EventSystem and the PointerEventData class.
+
+Here's an example of how you can modify your code to detect UI Image as raycast targets:
+
+Add a reference to the EventSystem in your script:
+csharp
+Copy code
+
+	using UnityEngine.EventSystems;
+	public class CameraRay : MonoBehaviour
+	{
+		public Camera cameraRay;
+		Ray ray;
+		RaycastHit hit;
+		string down, up;
+
+		GameObject selectedObjectArrow;
+		string selectedPart;
+		bool onoff;
+
+		EventSystem eventSystem; // add this line
+	
+	
+In the Start method, get a reference to the EventSystem:
+scss
+Copy code
+void Start()
+	{
+		cameraRay = GetComponent<Camera>();
+		eventSystem = FindObjectOfType<EventSystem>(); // add this line
+	}
+In the Update method, use the EventSystem to detect UI element hits:
+scss
+Copy code
+	void Update()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			// check if we hit a UI element
+			PointerEventData pointerEventData = new PointerEventData(eventSystem);
+			pointerEventData.position = Input.mousePosition;
+			List<RaycastResult> results = new List<RaycastResult>();
+			eventSystem.RaycastAll(pointerEventData, results);
+
+			if (results.Count > 0)
+			{
+				// we hit a UI element, handle the click event
+				// ...
+			}
+			else
+			{
+				// we didn't hit a UI element, handle the raycast event
+				ray = cameraRay.ScreenPointToRay(Input.mousePosition);
+				if (Physics.Raycast(ray, out hit))
+				{
+					// ...
+				}
+			}
+		}
+	}
+To handle the UI element click event, you can use the results list to access the hit GameObject and perform any necessary actions.
+scss
+Copy code
+	if (results.Count > 0)
+	{
+		// get the hit GameObject
+		GameObject hitObject = results[0].gameObject;
+
+		// check if it's a UI Image
+		Image hitImage = hitObject.GetComponent<Image>();
+		if (hitImage != null)
+		{
+			// handle the UI Image click event
+			// ...
+		}
+	}
+With these changes, you should be able to detect UI Image as raycast targets in your code.
