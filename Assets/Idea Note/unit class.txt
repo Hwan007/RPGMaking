@@ -102,14 +102,16 @@
 	근접 melee
 		중량 weight		= (날 길이 * 날 재질 밀도 * 날 중량에 대한 보정값) + (손잡이 길이 * 손잡이 재질 밀도 * 손잡이 중량에 대한 보정값)
 					= (property . blade . length * property . blade . material . density) + (property . handle . length * property . handle . material . density )
-		공격력 Damage	= (날 재질 레벨 보정값 + (날 종류에 대한 기본 데미지 * 패시브 공격력 보정)) * (날 길이 / 날 기본 길이) * (장치가 있는 경우 디버프)
-					= (property . blade . material . level * property . blade property . base damage) * (property . blade . length / property . blade . default length) * (gear property . pierce/shock/fire/cold/lightning . penalty)
-		화염 데미지		= gear property . fire . base damage
-		방패 추가 데미지	= gear property . shock . base damage
-		냉기 유무		= gear property . cold . existence
-		번개 유무		= gear property . lightning . existence
-		명중률 Accuracy	= (손잡이 재질 레벨 보정값 + (날 종류에 대한 기본 명중률 * 패시브 명중률 보정)) * 손잡이 길이 / 손잡이 기본 길이)
-					= (property . handle . material . level * property . blade property . base accuracy) * (property . handle . length / property . handle . default length)
+		공격력 Damage	= (날 재질 레벨 * 보정값 + 날 종류에 대한 기본 데미지) * (날 길이 / 날 기본 길이) * (패시브 스킬 보정 + 버프/디버프)
+					= (property . blade . material . level * material damage correction + property . blade property . base damage) * (property . blade . length / property . blade . default length) * (passive skill correction + buff/debuff)
+			재질 공격력 보정값 material damage correction
+		화염 데미지 fire damage		= gear property . fire . base damage
+		방패 추가 데미지 shock damage	= gear property . shock . base damage
+		냉기 유무 cold damage		= gear property . cold . existence
+		번개 유무 lightning damage	= gear property . lightning . existence
+		명중률 Accuracy	= (손잡이 재질 레벨 보정값 + 날 종류에 대한 기본 명중률) * (손잡이 길이 / 손잡이 기본 길이) * (패시브 스킬 보정 + 버프/디버프)
+					= (property . handle . material . level * material accuracy correction + property . blade property . base accuracy)  * (property . handle . length / property . handle . default length) * (passive skill correction + buff/debuff)
+			재질 명중률 보정값 material accuracy correction
 			패시브 명중률 보정값 passive accuracy correction	: 패시브 스킬에 의한 명중률 보정
 			※ 패시브 스킬에 의한 명중률 버프는 "기본 명중률 base accuracy"에 곱한다.
 			※ 필드에서 액티브 스킬 혹은 공격에 의한 버프/디버프는 total "명중률 accuracy"에 곱한다.
@@ -156,15 +158,15 @@
 					= (barrel * barrel correction + caliber * caliber correction) * material . density
 			barrel correction	: 총열 중량에 대한 보정값
 			caliber correction	: 구경 중량에 대한 보정값
-		공격력 damage	= (구경에 대한 보정값 + (기본 공격력 * 패시브 공격력 보정))
-					= (property . caliber) + (property . attack type . base damage * property . attack type . bullet property . penalty)
+		공격력 damage	= (구경에 대한 보정값 * (기본 공격력 + 일반 피해 패널티)) * (패시브 스킬 보정 + 버프/디버프)
+					= 
 						※ 발사회수에 따른 각 공격은 별도의 공격으로 취급한다.
 		화염 데미지 fire damage		= property . attack type . bullet property . fire . base damage
 		방패 추가 데미지 shock damage	= property . attack type . bullet property . shock . base damage
 		냉기 유무 cold damage		= property . attack type . bullet property . cold . existence
 		번개 유무 lightning damage	= property . attack type . bullet property . lightning . existence
-		명중률 accuracy	= ( (총열 길이 보정값) + (기본 명중률 * 패시브 명중률 보정) ) / ( 1 + (장비에 따른 보정값) ^ (사격거리 - 유효사거리) )
-					= ( (property . barrel * property . barrel correction) + (property . attack type . base accuracy * passive accuracy correction) / ( 1 + (property . range correction) ^ (attck range - property . attack type . base range) )
+		명중률 accuracy	= (총열 길이 보정값 + 기본 명중률) / ( 1 + (장비에 따른 보정값) ^ (사격거리 - 유효사거리) ) * (패시브 스킬 보정 + 버프/디버프)
+					= 
 			패시브 명중률 보정값 passive accuracy correction	: 패시브 스킬에 의한 명중률 보정
 			※ 패시브 스킬에 의한 명중률 버프는 "기본 명중률 base accuracy"에 곱한다.
 			※ 필드에서 액티브 스킬 혹은 공격에 의한 버프/디버프는 total "명중률 accuracy"에 곱한다.
@@ -208,7 +210,12 @@
 					기본 명중률 base accuracy
 					유효 사거리 base range
 	방패
-		내구도 = 추가로 방어할 수 있는 내구도
+		중량
+		내구도
+			재질
+				이름
+				레벨
+				밀도
 		피해 감소율 = 전체 피해 데미지 감소 보정
 		치명타 배율 감소율 = 치명타 시에 피해 배율에 대한 감소 보정
 
