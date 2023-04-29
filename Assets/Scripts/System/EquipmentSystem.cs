@@ -65,11 +65,11 @@ namespace ProjectCode
         /// <param name="item">Which item to equip</param>
         public void Equip(MechEquipment item)
         {
-            Unequip(item.Slots[0].PartSlot, true);
+            Unequip(item.SlotStat.PartSlot, true);
 
             OnEquiped?.Invoke(item);
 
-            switch (item.Slots[0].PartSlot)
+            switch (item.SlotStat.PartSlot)
             {
                 case MechEquipment.MechSlot.Head:
                     {

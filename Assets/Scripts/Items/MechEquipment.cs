@@ -53,7 +53,7 @@ namespace ProjectCode
             }
         }
 
-        public List<Slot> Slots;
+        public Slot SlotStat;
 
         public abstract class Effect : ScriptableObject
         {
@@ -74,8 +74,8 @@ namespace ProjectCode
         {
             string desc = base.GetDescription();
 
-            foreach (var item in Slots)
-                desc += "\n" + item.GetDescription();
+            if(SlotStat.GetDescription() != null)
+                desc += "\n" + SlotStat.GetDescription();
             foreach (var effect in EquippedEffects)
                 desc += "\n" + effect.GetDescription();
             return desc;
@@ -85,16 +85,12 @@ namespace ProjectCode
         {
             foreach (var effect in EquippedEffects)
                 effect.EquippedEffect(user);
-            foreach (var slot in Slots)
-                slot.EquippedSlot(user);
         }
 
         public void UnequippedBy(CharacterData user)
         {
             foreach (var effect in EquippedEffects)
                 effect.RemovedEffect(user);
-            foreach (var slot in Slots)
-                slot.RemovedSlot(user);
         }
     }
 }
@@ -113,15 +109,18 @@ public class EquipmentItemEditor : Editor
     List<string> m_AvailableEquipEffectType;
     SerializedProperty m_EquippedEffectListProperty;
 
-    List<string> m_AvailableSlotListType;
-    SerializedProperty m_SlotListProperty;
+    List<string> m_AvailableSlotType;
+    SerializedProperty m_SlotProperty;
+
+    public int SelectPart = -1;
+    public int SelectedPart = -1;
 
     void OnEnable()
     {
         m_Target = target as MechEquipment;
 
         m_EquippedEffectListProperty = serializedObject.FindProperty(nameof(MechEquipment.EquippedEffects));
-        m_SlotListProperty = serializedObject.FindProperty(nameof(MechEquipment.Slots));
+        m_SlotProperty = serializedObject.FindProperty(nameof(MechEquipment.SlotStat));
         m_BaseStatProperty = serializedObject.FindProperty(nameof(MechEquipment.Stats));
 
         m_ItemEditor = new ItemEditor();
@@ -135,7 +134,7 @@ public class EquipmentItemEditor : Editor
             .ToList();
 
         lookup = typeof(MechEquipment.Slot);
-        m_AvailableSlotListType = System.AppDomain.CurrentDomain.GetAssemblies()
+        m_AvailableSlotType = System.AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
             .Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(lookup))
             .Select(type => type.Name)
@@ -150,25 +149,27 @@ public class EquipmentItemEditor : Editor
         var depth = child.depth;
         child.NextVisible(true);
 
-        EditorGUILayout.LabelField("Stats", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField(" Base Stat", EditorStyles.boldLabel);
         while (child.depth > depth)
         {
             EditorGUILayout.PropertyField(child, true);
             child.NextVisible(false);
         }
 
-        int choice = EditorGUILayout.Popup("Add Slot Stat", -1, m_AvailableSlotListType.ToArray());
-
-        if (choice != -1)
+        EditorGUILayout.LabelField("Special Stat", EditorStyles.boldLabel);
+        SelectPart = EditorGUILayout.Popup("Select Stat", SelectedPart, m_AvailableSlotType.ToArray());
+        if (SelectedPart != SelectPart)
         {
-            var newInstance = ScriptableObject.CreateInstance(m_AvailableSlotListType[choice]);
+            var item = m_SlotProperty.objectReferenceValue;
+            DestroyImmediate(item, true);
+
+            var newInstance = ScriptableObject.CreateInstance(m_AvailableSlotType[SelectPart]);
 
             AssetDatabase.AddObjectToAsset(newInstance, target);
 
-            m_SlotListProperty.InsertArrayElementAtIndex(m_SlotListProperty.arraySize);
-            m_SlotListProperty.GetArrayElementAtIndex(m_SlotListProperty.arraySize - 1).objectReferenceValue = newInstance;
+            m_SlotProperty.objectReferenceValue = newInstance;
 
-            child = m_SlotListProperty.Copy();
+            child = m_SlotProperty.Copy();
             depth = child.depth;
             child.NextVisible(true);
 
@@ -178,38 +179,25 @@ public class EquipmentItemEditor : Editor
                 child.NextVisible(false);
             }
         }
+        SelectedPart = SelectPart;
 
         Editor ed = null;
-        int toDelete = -1;
-        for (int i = 0; i < m_SlotListProperty.arraySize; ++i)
+        if(m_SlotProperty.objectReferenceValue != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.BeginVertical();
-            var item = m_SlotListProperty.GetArrayElementAtIndex(i);
-            SerializedObject obj = new SerializedObject(item.objectReferenceValue);
+            var item = m_SlotProperty;
 
             Editor.CreateCachedEditor(item.objectReferenceValue, null, ref ed);
 
             ed.OnInspectorGUI();
             EditorGUILayout.EndVertical();
-
-            if (GUILayout.Button("-", GUILayout.Width(32)))
-            {
-                toDelete = i;
-            }
             EditorGUILayout.EndHorizontal();
         }
 
-        if (toDelete != -1)
-        {
-            var item = m_SlotListProperty.GetArrayElementAtIndex(toDelete).objectReferenceValue;
-            DestroyImmediate(item, true);
+        /////////////////////////////////////
 
-            //need to do it twice, first time just nullify the entry, second actually remove it.
-            m_SlotListProperty.DeleteArrayElementAtIndex(toDelete);
-        }
-
-        choice = EditorGUILayout.Popup("Add new Effect", -1, m_AvailableEquipEffectType.ToArray());
+        int choice = EditorGUILayout.Popup("Add new Effect", -1, m_AvailableEquipEffectType.ToArray());
 
         if (choice != -1)
         {
@@ -222,7 +210,7 @@ public class EquipmentItemEditor : Editor
         }
 
         ed = null;
-        toDelete = -1;
+        int toDelete = -1;
         for (int i = 0; i < m_EquippedEffectListProperty.arraySize; ++i)
         {
             EditorGUILayout.BeginHorizontal();
