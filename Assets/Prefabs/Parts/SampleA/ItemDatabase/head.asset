@@ -1,28 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4026da926314b754c8c2ed79e105459b, type: 3}
-  m_Name: head
-  m_EditorClassIdentifier: 
-  ItemName: Sample Head
-  ItemSprite: {fileID: 0}
-  Description: Sample for the Mech head part.
-  WorldObjectPrefab: {fileID: 6310482049111969388, guid: 183f9eac6a0b80245991146094f53d04, type: 3}
-  Stats:
-    Health: 1
-    Armour: 1
-  Slots:
-  - {fileID: 1276087656162858221}
-  EquippedEffects: []
---- !u!114 &1276087656162858221
+--- !u!114 &-5694858880153644172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,10 +17,27 @@ MonoBehaviour:
   Modifier:
     ModifierMode: 1
     Stats:
-      health: 0
+      health: 500
       power: 0
       requiredPower: 0
-      defense: 0
-      elementalProtection: 0000000000000000000000000000000000000000
+      elementalProtection: 0200000002000000020000000200000002000000
       elementalBoosts: 0000000000000000000000000000000000000000
-  MoreDescription: 
+  RequiredPower: 100
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4026da926314b754c8c2ed79e105459b, type: 3}
+  m_Name: head
+  m_EditorClassIdentifier: 
+  ItemName: sample head
+  ItemSprite: {fileID: 21300000, guid: 1f8c045cdc917d3468b7c759d31c6d1b, type: 3}
+  Description: sample head
+  WorldObjectPrefab: {fileID: 6310482049111969388, guid: 183f9eac6a0b80245991146094f53d04, type: 3}
+  SlotStat: {fileID: -5694858880153644172}
+  EquippedEffects: []

@@ -22,7 +22,7 @@ namespace ProjectCode
             RightWeapon,
             Core
         }
-
+        /*
         [System.Serializable]
         public class BaseStat
         {
@@ -36,7 +36,7 @@ namespace ProjectCode
             Health = 1,
             Armour = 1
         };
-
+        */
         public abstract class Slot : ScriptableObject
         {
             public string Description;
@@ -121,7 +121,7 @@ public class EquipmentItemEditor : Editor
 
         m_EquippedEffectListProperty = serializedObject.FindProperty(nameof(MechEquipment.EquippedEffects));
         m_SlotProperty = serializedObject.FindProperty(nameof(MechEquipment.SlotStat));
-        m_BaseStatProperty = serializedObject.FindProperty(nameof(MechEquipment.Stats));
+        //m_BaseStatProperty = serializedObject.FindProperty(nameof(MechEquipment.Stats));
 
         m_ItemEditor = new ItemEditor();
         m_ItemEditor.Init(serializedObject);
@@ -143,8 +143,10 @@ public class EquipmentItemEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        m_ItemEditor.GUI();
+        serializedObject.Update();
 
+        m_ItemEditor.GUI();
+        /*
         var child = m_BaseStatProperty.Copy();
         var depth = child.depth;
         child.NextVisible(true);
@@ -155,9 +157,9 @@ public class EquipmentItemEditor : Editor
             EditorGUILayout.PropertyField(child, true);
             child.NextVisible(false);
         }
-
-        EditorGUILayout.LabelField("Special Stat", EditorStyles.boldLabel);
-        SelectPart = EditorGUILayout.Popup("Select Stat", SelectedPart, m_AvailableSlotType.ToArray());
+        */
+        EditorGUILayout.LabelField("Base Stat", EditorStyles.boldLabel);
+        SelectPart = EditorGUILayout.Popup("Add Stat", SelectedPart, m_AvailableSlotType.ToArray());
         if (SelectedPart != SelectPart)
         {
             var item = m_SlotProperty.objectReferenceValue;
@@ -169,8 +171,8 @@ public class EquipmentItemEditor : Editor
 
             m_SlotProperty.objectReferenceValue = newInstance;
 
-            child = m_SlotProperty.Copy();
-            depth = child.depth;
+            var child = m_SlotProperty.Copy();
+            var depth = child.depth;
             child.NextVisible(true);
 
             while (child.depth > depth)

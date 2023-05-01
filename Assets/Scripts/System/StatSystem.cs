@@ -43,7 +43,7 @@ namespace ProjectCode
             public int health;
             public int power;
             public int requiredPower;
-            public int defense;
+            //public int defense;
 
             public int[] elementalProtection = new int[Enum.GetValues(typeof(DamageType)).Length];
             public int[] elementalBoosts = new int[Enum.GetValues(typeof(DamageType)).Length];
@@ -53,7 +53,7 @@ namespace ProjectCode
                 health = other.health;
                 power = other.power;
                 requiredPower = other.requiredPower;
-                defense = other.defense;
+                //defense = other.defense;
 
                 //use an array indexed by the DamageType enum for easy extensibility
                 Array.Copy(other.elementalProtection, elementalProtection, other.elementalProtection.Length);
@@ -72,7 +72,7 @@ namespace ProjectCode
                     health += Mathf.FloorToInt(health * (modifier.Stats.health / 100.0f));
                     power += Mathf.FloorToInt(power * (modifier.Stats.power / 100.0f));
                     requiredPower += Mathf.FloorToInt(requiredPower * (modifier.Stats.requiredPower / 100.0f));
-                    defense += Mathf.FloorToInt(defense * (modifier.Stats.defense / 100.0f));
+                    //defense += Mathf.FloorToInt(defense * (modifier.Stats.defense / 100.0f));
 
                     for (int i = 0; i < elementalProtection.Length; ++i)
                         elementalProtection[i] += Mathf.FloorToInt(elementalProtection[i] * (modifier.Stats.elementalProtection[i] / 100.0f));
@@ -85,7 +85,7 @@ namespace ProjectCode
                     health += modifier.Stats.health;
                     power += modifier.Stats.power;
                     requiredPower += modifier.Stats.requiredPower;
-                    defense += modifier.Stats.defense;
+                    //defense += modifier.Stats.defense;
 
                     for (int i = 0; i < elementalProtection.Length; ++i)
                         elementalProtection[i] += modifier.Stats.elementalProtection[i];
@@ -384,10 +384,10 @@ public class StatsDrawer : PropertyDrawer
 
         currentRect.y += EditorGUIUtility.singleLineHeight;
         EditorGUI.PropertyField(currentRect, property.FindPropertyRelative(nameof(StatSystem.Stats.requiredPower)));
-        */
+        
         currentRect.y += EditorGUIUtility.singleLineHeight;
         EditorGUI.PropertyField(currentRect, property.FindPropertyRelative(nameof(StatSystem.Stats.defense)));
-
+        */
         currentRect.y += EditorGUIUtility.singleLineHeight;
         EditorGUI.LabelField(currentRect, "Elemental Protection/DamageBoost", style);
 
