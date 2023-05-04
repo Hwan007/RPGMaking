@@ -13,6 +13,8 @@ public class MainCamera : MonoBehaviour
 
     Camera main;
 
+    [Header("Starting Local Position")]
+    public Vector3 Position = new Vector3(0, 10.0f, -11.0f);
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class MainCamera : MonoBehaviour
         transform.parent = GameObject.Find("Camera Target").transform;
         //position = 3;
         //transform.localPosition = new Vector3(0, 0, -distance[position]);
-        transform.localPosition = new Vector3(0, 28.0f, -30.0f);
+        transform.localPosition = Position;
         transform.LookAt(transform.parent);
         //velocity = Vector3.zero;
 
