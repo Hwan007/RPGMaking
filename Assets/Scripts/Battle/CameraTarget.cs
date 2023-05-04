@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraTarget : MonoBehaviour
 {
     Terrain terrainBase;
+#if TestCode20230504
     public float normalSpeed = 20f;
     public float boostSpeed = 50f;
     public float rotateSpeed = 5f;
@@ -15,15 +16,33 @@ public class CameraTarget : MonoBehaviour
     float maxSpeed;
     public float verticalRotateUpperLimit = 40.0f;
     public float verticalRotateLowerLimit = 10.0f;
+
     MainCamera mainCamera;
 
     private Vector3 velocity;
-
+#else
+    public float NormalLimitSpeed = 30.0f;
+    public float BoostLimitSpeed = 30.0f;
+    public float BoostSpeedAmp = 3.0f;
+    [Header("Power value must over Drag")]
+    public float Power = 3.0f;
+    [Header("Drag value must over 0")]
+    public float Drag = 2.0f;
+    [Header("Rotate Speed value must be between 0, 2")]
+    public float RotateSpeed = 1.0f;
+    int rotation = 0;
+    Vector3 speed = Vector3.zero;
+#endif
     void Start()
     {
+#if TestCode20230504
         velocity = Vector3.zero;
         mainCamera = transform.Find("Main Camera").GetComponent<MainCamera>();
-        terrainBase = GameObject.Find("Terrain/Terrain").GetComponent<Terrain>();
+#endif
+        terrainBase = GameObject.Find("Terrain").GetComponent<Terrain>();
+        PreQuaternion = transform.rotation;
+        DesireQuaternion = transform.rotation;
+        speed = Vector3.zero;
     }
 
     void Update()
@@ -34,11 +53,13 @@ public class CameraTarget : MonoBehaviour
         // Set the player's position to be on top of the terrain
         // if (transform.position.y < playerHeight + transform.localScale.y * 0.5f)
         transform.position = new Vector3(transform.position.x, playerHeight + transform.localScale.y * 0.5f, transform.position.z);
-
+#if TestCode20230504
         RotateDependsOnMouse();
+#endif
         MovePlayer();
+        QERotate();
     }
-
+#if TestCode20230504
     void RotateDependsOnMouse()
     {
         if (Input.GetMouseButton(1))
@@ -54,7 +75,8 @@ public class CameraTarget : MonoBehaviour
                 , transform.eulerAngles.z);
         }
     }
-
+#endif
+#if TestCode20230504
     void MovePlayer()
     {
         // Get the horizontal and vertical input
@@ -113,8 +135,89 @@ public class CameraTarget : MonoBehaviour
         // Move the object based on the current velocity
         transform.position += velocity * Time.deltaTime;
     }
+#else
+    
+    void MovePlayer()
+    {
+        // Calculate the movement direction based on the camera view
+        Vector3 forward = Camera.main.transform.forward;
+        Vector3 right = Camera.main.transform.right;
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+
+        // Get the horizontal and vertical input
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector3 direction = (forward * vertical + right * horizontal).normalized;
+        Vector3 Force;
+        // Apply acceleration and deceleration to the velocity
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+                Force = (direction * Power * BoostSpeedAmp - speed.normalized * Drag);
+            else
+                Force = (direction * Power - speed.normalized * Drag);
+
+            var LimitSpeed = Input.GetKey(KeyCode.LeftShift) ? BoostLimitSpeed : NormalLimitSpeed;
+            var cal = speed + Force * Time.deltaTime;
+            if (cal.magnitude > LimitSpeed)
+            {
+                speed = cal.normalized * LimitSpeed;
+            }
+            else
+            {
+                speed = cal;
+            }
+        }
+        else if (speed.magnitude > 0.01f)
+        {
+            Force = (- speed.normalized * Drag * 10.0f);
+            speed += Force * Time.deltaTime;
+        }
+        else
+        {
+            Force = Vector3.zero;
+            speed = Vector3.zero;
+        }
+
+        transform.position += speed * Time.deltaTime;
+    }
+
+    Quaternion PreQuaternion;
+    Quaternion DesireQuaternion;
+    float TimeCount = 0.0f;
+    void QERotate()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            rotation++;
+            DesireQuaternion = Quaternion.Euler(PreQuaternion.eulerAngles + rotation * new Vector3(0, 90.0f, 0));
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            rotation--;
+            DesireQuaternion = Quaternion.Euler(PreQuaternion.eulerAngles + rotation * new Vector3(0, 90.0f, 0));
+        }
+
+        if (Quaternion.Angle(transform.rotation, DesireQuaternion) > 0.1f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, DesireQuaternion, TimeCount / 2.0f * RotateSpeed);
+            TimeCount += Time.deltaTime;
+        }
+        else if(rotation != 0)
+        {
+            transform.rotation = DesireQuaternion;
+            PreQuaternion = transform.rotation;
+            TimeCount = 0.0f;
+            rotation = 0;
+        }
+    }
+#endif
 }
-/*
+#if TestCode
 public class CameraTarget : MonoBehaviour
 {
     public Terrain terrainbase;
@@ -186,4 +289,4 @@ public class CameraTarget : MonoBehaviour
         transform.position += velocity * Time.deltaTime;
     }
 }
-*/
+#endif
