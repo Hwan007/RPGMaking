@@ -15,6 +15,8 @@ namespace ProjectCode
         [Header("Stat per Slot")]
         public int OutputPower;
         public int CoreSlot;
+        [Header("Connected Part\n1:head  2:right arm  3:left arm\n4:right leg  5:left leg")]
+        public Vector3[] TorsoJoint = new Vector3[5];
         public override void EquippedSlot(CharacterData user)
         {
             user.Stats.AddModifier(Modifier);

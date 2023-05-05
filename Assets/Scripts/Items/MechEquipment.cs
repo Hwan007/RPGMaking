@@ -12,6 +12,7 @@ namespace ProjectCode
     [CreateAssetMenu(fileName = "Mech Equipment", menuName = "Item/Mech Equipment", order = -999)]
     public class MechEquipment : Item
     {
+        public Sprite[] Sprite = new Sprite[2];
         public enum MechSlot
         {
             Head,
@@ -103,8 +104,7 @@ public class EquipmentItemEditor : Editor
 
     ItemEditor m_ItemEditor;
 
-    SerializedProperty m_BaseStatProperty;
-    SerializedProperty m_AddStatProperty;
+    SerializedProperty m_SpriteProperty;
 
     List<string> m_AvailableEquipEffectType;
     SerializedProperty m_EquippedEffectListProperty;
@@ -121,7 +121,7 @@ public class EquipmentItemEditor : Editor
 
         m_EquippedEffectListProperty = serializedObject.FindProperty(nameof(MechEquipment.EquippedEffects));
         m_SlotProperty = serializedObject.FindProperty(nameof(MechEquipment.SlotStat));
-        //m_BaseStatProperty = serializedObject.FindProperty(nameof(MechEquipment.Stats));
+        m_SpriteProperty = serializedObject.FindProperty(nameof(MechEquipment.Sprite));
 
         m_ItemEditor = new ItemEditor();
         m_ItemEditor.Init(serializedObject);
@@ -146,6 +146,8 @@ public class EquipmentItemEditor : Editor
         serializedObject.Update();
 
         m_ItemEditor.GUI();
+        EditorGUILayout.PropertyField(m_SpriteProperty);
+        EditorGUILayout.LabelField("1: Face side    2: Back side", EditorStyles.toolbar);
         /*
         var child = m_BaseStatProperty.Copy();
         var depth = child.depth;

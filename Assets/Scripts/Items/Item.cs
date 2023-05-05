@@ -13,7 +13,7 @@ namespace ProjectCode
     public abstract class Item : ScriptableObject
     {
         public string ItemName;
-        public Sprite ItemSprite;
+        public Sprite ItemIcon;
         public string Description;
         public GameObject WorldObjectPrefab;
         public virtual bool UsedBy(CharacterData user)
@@ -42,7 +42,7 @@ public class ItemEditor
         m_Target = target;
 
         m_NameProperty = m_Target.FindProperty(nameof(Item.ItemName));
-        m_IconProperty = m_Target.FindProperty(nameof(Item.ItemSprite));
+        m_IconProperty = m_Target.FindProperty(nameof(Item.ItemIcon));
         m_DescriptionProperty = m_Target.FindProperty(nameof(Item.Description));
         m_WorldObjectPrefabProperty = m_Target.FindProperty(nameof(Item.WorldObjectPrefab));
     }
