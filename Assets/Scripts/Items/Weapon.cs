@@ -116,7 +116,7 @@ namespace ProjectCode
             Range
         }
 
-        public abstract class WeaponTypeStat : ScriptableObject
+        public abstract class Property : ScriptableObject
         {
             public WeaponClass Class;
         }
@@ -148,11 +148,23 @@ namespace ProjectCode
         [System.Serializable]
         public struct WeaponBaseStat
         {
+            // output information of weapon
+            public int Weight;
+            public int Damage;
+            public int FireDamage;
+            public int ShockDamage;
+            public bool ColdDamage;
+            public bool LightningDamage;
             public float Accuracy;
+            public float Range;
+            public float CriticalProbability;
+            public float CriticalMagnification;
+            public float ShieldPierceProbability;
+
+            // value for using calculation
+            public int NumberOfAttacks;
             public int MinimumDamage;
             public int MaximumDamage;
-            public float Range;
-            public int NumberOfAttacks;
             public float Duration;
             public float PreDelay;
             public float PostDelay;
@@ -161,10 +173,23 @@ namespace ProjectCode
         [Header("Stats")]
         public WeaponBaseStat WeaponStats = new WeaponBaseStat()
         {
+            Weight = 1,
+            Damage = 1,
+            FireDamage = 1,
+            ShockDamage = 1,
+            ColdDamage = false,
+            LightningDamage = false,
             Accuracy = 1.0f,
+            Range = 1,
+            CriticalProbability = 1.0f,
+            CriticalMagnification = 1.0f,
+            ShieldPierceProbability = 1.0f,
+            NumberOfAttacks = 1,
             MinimumDamage = 1,
             MaximumDamage = 1,
-            Range = 1
+            Duration = 1.0f,
+            PreDelay = 1.0f,
+            PostDelay = 1.0f
         };
 
         public List<WeaponAttackEffect> AttackEffects;
