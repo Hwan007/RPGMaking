@@ -20,6 +20,8 @@ namespace ProjectCode
         }
 		public string Name;
 		public int Level;
-		public int Density;
+		public float Density;
+		public float DamageCorrection;
+		public float AccuracyCorrection;
 	}
 }

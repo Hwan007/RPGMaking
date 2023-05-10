@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03b6c51e7eb7134f87268672979a5c3, type: 3}
+  m_Name: SampleWeapon
+  m_EditorClassIdentifier: 
+  ItemName: 
+  ItemIcon: {fileID: 0}
+  Description: 
+  WorldObjectPrefab: {fileID: 0}
+  Sprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  SlotStat: {fileID: 0}
+  EquippedEffects: []
+  WeaponProperty: {fileID: 0}
+  WeaponStats:
+    Weight: 1
+    Damage: 1
+    FireDamage: 1
+    ShockDamage: 1
+    ColdDamage: 0
+    LightningDamage: 0
+    Accuracy: 1
+    Range: 1
+    CriticalProbability: 1
+    CriticalMagnification: 1
+    ShieldPierceProbability: 1
+    NumberOfAttacks: 1
+    MinimumDamage: 1
+    MaximumDamage: 1
+    Duration: 1
+    PreDelay: 1
+    PostDelay: 1
+  AttackEffects: []
+  HitSounds: []
+  FireSounds: []

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectCode;
@@ -110,7 +109,7 @@ namespace ProjectCode
             }
         }
 
-        public enum WeaponClass
+        public enum WeaponType
         {
             Melee,
             Range
@@ -118,8 +117,13 @@ namespace ProjectCode
 
         public abstract class Property : ScriptableObject
         {
-            public WeaponClass Class;
+            public WeaponType Class;
+
+            public WeaponBaseStat WeaponStats { get; set; }
+
+            public abstract WeaponBaseStat Calculating();
         }
+        public Property WeaponProperty;
 
         /// <summary>
         /// Base class of all effect you can add on a weapon to specialize it. See documentation on How to write a new
@@ -140,11 +144,7 @@ namespace ProjectCode
                 return Description;
             }
         }
-        public enum WeaponType
-        {
-            Melee,
-            Range
-        }
+
         [System.Serializable]
         public struct WeaponBaseStat
         {
@@ -170,27 +170,7 @@ namespace ProjectCode
             public float PostDelay;
         }
 
-        [Header("Stats")]
-        public WeaponBaseStat WeaponStats = new WeaponBaseStat()
-        {
-            Weight = 1,
-            Damage = 1,
-            FireDamage = 1,
-            ShockDamage = 1,
-            ColdDamage = false,
-            LightningDamage = false,
-            Accuracy = 1.0f,
-            Range = 1,
-            CriticalProbability = 1.0f,
-            CriticalMagnification = 1.0f,
-            ShieldPierceProbability = 1.0f,
-            NumberOfAttacks = 1,
-            MinimumDamage = 1,
-            MaximumDamage = 1,
-            Duration = 1.0f,
-            PreDelay = 1.0f,
-            PostDelay = 1.0f
-        };
+        public WeaponBaseStat WeaponStats;
 
         public List<WeaponAttackEffect> AttackEffects;
 
@@ -275,8 +255,6 @@ public class WeaponEditor : Editor
     SerializedProperty m_HitSoundProps;
     SerializedProperty m_FireSoundProps;
 
-    SerializedProperty m_MinimumPowerProperty;
-
     SerializedProperty m_WeaponStatProperty;
 
     [MenuItem("Assets/Create/Item/Weapon", priority = -999)]
@@ -321,13 +299,12 @@ public class WeaponEditor : Editor
     {
         m_ItemEditor.GUI();
 
-        EditorGUILayout.PropertyField(m_MinimumPowerProperty);
-
-        //EditorGUILayout.PropertyField(m_WeaponStatProperty, true);
+        // EditorGUILayout.PropertyField(m_WeaponStatProperty, true);
+        
         var child = m_WeaponStatProperty.Copy();
         var depth = child.depth;
         child.NextVisible(true);
-
+        
         EditorGUILayout.LabelField("Weapon Stats", EditorStyles.boldLabel);
         while (child.depth > depth)
         {
