@@ -13,6 +13,9 @@ namespace ProjectCode
 
         public AttackTypeList AttackType;
 
-
+        public override Weapon.WeaponBaseStat Calculating()
+        {
+            return base.WeaponStats;
+        }
     }
 }
