@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ProjectCode
 {
-    public class MeleeWeapon : Weapon.Property
+    public class Melee : Weapon.Property
     {
         public class PartStat
         {

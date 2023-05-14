@@ -257,6 +257,10 @@ public class WeaponEditor : Editor
 
     SerializedProperty m_WeaponStatProperty;
 
+    List<string> m_AvailableWeaponTypeList;
+    SerializedProperty m_WeaponTypeStat;
+
+    Weapon.WeaponType sel;
     [MenuItem("Assets/Create/Item/Weapon", priority = -999)]
     static public void CreateWeapon()
     {
@@ -269,8 +273,6 @@ public class WeaponEditor : Editor
     void OnEnable()
     {
         m_Target = target as Weapon;
-        m_EquippedEffectListProperty = serializedObject.FindProperty(nameof(Weapon.EquippedEffects));
-        m_WeaponAttackEffectListProperty = serializedObject.FindProperty(nameof(Weapon.AttackEffects));
 
         m_WeaponStatProperty = serializedObject.FindProperty(nameof(Weapon.WeaponStats));
 
@@ -280,6 +282,7 @@ public class WeaponEditor : Editor
         m_ItemEditor = new ItemEditor();
         m_ItemEditor.Init(serializedObject);
 
+        m_EquippedEffectListProperty = serializedObject.FindProperty(nameof(Weapon.EquippedEffects));
         var lookup = typeof(MechEquipment.Effect);
         m_AvailableEquipEffectType = System.AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
@@ -287,21 +290,48 @@ public class WeaponEditor : Editor
             .Select(type => type.Name)
             .ToList();
 
+        m_WeaponAttackEffectListProperty = serializedObject.FindProperty(nameof(Weapon.AttackEffects));
         lookup = typeof(Weapon.WeaponAttackEffect);
         m_AvailableWeaponAttackEffectType = System.AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
             .Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(lookup))
             .Select(type => type.Name)
             .ToList();
+
+        m_WeaponTypeStat = serializedObject.FindProperty(nameof(Weapon.WeaponProperty));
+        lookup = typeof(Weapon.Property);
+        m_AvailableWeaponTypeList = System.AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(lookup))
+            .Select(type => type.Name)
+            .ToList();
+
+        if (serializedObject.FindProperty(nameof(Weapon.WeaponProperty.Class)) == null)
+        {
+            sel = (Weapon.WeaponType) 5;
+        }
+        else
+        {
+            sel = (Weapon.WeaponType)serializedObject.FindProperty(nameof(Weapon.WeaponProperty.Class)).enumValueIndex;
+        }
     }
 
     public override void OnInspectorGUI()
     {
         m_ItemEditor.GUI();
+#if true
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.BeginVertical();
+        EditorGUILayout.PropertyField(m_WeaponStatProperty, new GUIContent("Weapon Stats"), true);
+        EditorGUILayout.EndVertical();
+        if(GUILayout.Button("Reload", GUILayout.MaxWidth(80.0f)))
+        {
+            Debug.Log("Reload");
+        }
+        GUILayout.EndHorizontal();
 
-        // EditorGUILayout.PropertyField(m_WeaponStatProperty, true);
-        
-        var child = m_WeaponStatProperty.Copy();
+#else
+        var child =  m_WeaponStatProperty.Copy();
         var depth = child.depth;
         child.NextVisible(true);
         
@@ -311,10 +341,41 @@ public class WeaponEditor : Editor
             EditorGUILayout.PropertyField(child, true);
             child.NextVisible(false);
         }
+#endif
+        if (m_WeaponTypeStat.objectReferenceValue == null)
+        {
+            GUILayout.BeginHorizontal();
+            sel = (Weapon.WeaponType)EditorGUILayout.EnumPopup(new GUIContent("Add Stats"), sel, GUILayout.MaxWidth(250.0f));
+            if (GUILayout.Button("Add", GUILayout.MaxWidth(40.0f)))
+            {
+                //Debug.Log(sel + "Clicked");
+                int i;
+                for (i = 0; i < m_AvailableWeaponTypeList.Count; i++)
+                {
+                    if (m_AvailableWeaponTypeList[i].ToString() == sel.ToString())
+                    {
+                        Debug.Log(m_AvailableWeaponTypeList[i].ToString() + sel + "Clicked");
+                        break;
+                    }
+                }
+                var newinstance = ScriptableObject.CreateInstance(m_AvailableWeaponTypeList[i]);
+
+                AssetDatabase.AddObjectToAsset(newinstance, target);
+
+                m_WeaponTypeStat.objectReferenceValue = newinstance;
+            }
+            GUILayout.EndHorizontal();
+        }
+        else
+        {
+
+        }
 
         EditorGUILayout.PropertyField(m_HitSoundProps, true);
         EditorGUILayout.PropertyField(m_FireSoundProps, true);
-
+        
+        
+        // Equipment Effect
         int choice = EditorGUILayout.Popup("Add new Equipment Effect", -1, m_AvailableEquipEffectType.ToArray());
 
         if (choice != -1)
@@ -359,7 +420,7 @@ public class WeaponEditor : Editor
             m_EquippedEffectListProperty.DeleteArrayElementAtIndex(toDelete);
         }
 
-        //attack
+        // Attack Effect
         choice = EditorGUILayout.Popup("Add new Weapon Attack Effect", -1, m_AvailableWeaponAttackEffectType.ToArray());
 
         if (choice != -1)

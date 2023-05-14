@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-252897989551482288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd2cf18d7e7f584987b9611e57f7b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Class: 0
+  BladeType: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03b6c51e7eb7134f87268672979a5c3, type: 3}
+  m_Name: weapon
+  m_EditorClassIdentifier: 
+  ItemName: 
+  ItemIcon: {fileID: 0}
+  Description: 
+  WorldObjectPrefab: {fileID: 0}
+  Sprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  SlotStat: {fileID: 0}
+  EquippedEffects: []
+  WeaponProperty: {fileID: -252897989551482288}
+  WeaponStats:
+    Weight: 0
+    Damage: 0
+    FireDamage: 0
+    ShockDamage: 0
+    ColdDamage: 0
+    LightningDamage: 0
+    Accuracy: 0
+    Range: 0
+    CriticalProbability: 0
+    CriticalMagnification: 0
+    ShieldPierceProbability: 0
+    NumberOfAttacks: 0
+    MinimumDamage: 0
+    MaximumDamage: 0
+    Duration: 0
+    PreDelay: 0
+    PostDelay: 0
+  AttackEffects: []
+  HitSounds: []
+  FireSounds: []

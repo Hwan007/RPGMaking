@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ProjectCode
 {
-    public class RangeWeapon : Weapon.Property
+    public class Range : Weapon.Property
     {
         public enum AttackTypeList
         {
