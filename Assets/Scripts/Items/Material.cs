@@ -25,3 +25,21 @@ namespace ProjectCode
 		public float AccuracyCorrection;
 	}
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(ProjectCode.Material))]
+public class MaterialEditor : Editor
+{
+    ProjectCode.Material m_Target;
+
+    ItemEditor m_ItemEditor;
+
+    [MenuItem("Assets/Create/Item/Material", priority = -999)]
+    static public void CreateMaterial()
+    {
+        var newMaterial = CreateInstance<ProjectCode.Material>();
+
+        ProjectWindowUtil.CreateAsset(newMaterial, "material.asset");
+    }
+}
+#endif

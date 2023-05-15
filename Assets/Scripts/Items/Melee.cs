@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
+using ProjectCode;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace ProjectCode
 {
     public class Melee : Weapon.Property
     {
+        [System.Serializable]
         public class PartStat
         {
             public Material Material;
@@ -21,7 +26,8 @@ namespace ProjectCode
             Spear
         }
         public BladeTypeList BladeType;
-
+        
+        [System.Serializable]
         public struct BladeProperty
         {
             public int MinimumLength;
@@ -34,10 +40,12 @@ namespace ProjectCode
             public float PreDelay;
             public float PostDelay;
         }
+        
         public BladeProperty Axe;
         public BladeProperty Sword;
         public BladeProperty Spear;
 
+        [System.Serializable]
         public struct GearProperty
         {
             public int Penalty;
@@ -171,7 +179,17 @@ namespace ProjectCode
 
             base.WeaponStats = ret;
             Debug.Log("Weapon stats calculation complete");
+            //Debug.Log(base.WeaponStats.Range);
             return ret;
         }
     }
 }
+/*
+#if UNITY_EDITOR
+[CustomEditor(typeof(Melee))]
+public class MeleeEditor : Editor
+{
+    
+}
+#endif
+*/

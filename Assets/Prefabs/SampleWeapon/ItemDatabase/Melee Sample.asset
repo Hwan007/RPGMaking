@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03b6c51e7eb7134f87268672979a5c3, type: 3}
+  m_Name: Melee Sample
+  m_EditorClassIdentifier: 
+  ItemName: 
+  ItemIcon: {fileID: 0}
+  Description: 
+  WorldObjectPrefab: {fileID: 0}
+  Sprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  SlotStat: {fileID: 0}
+  EquippedEffects: []
+  WeaponProperty: {fileID: 2018033951348884737}
+  WeaponStats:
+    Weight: 11000
+    Damage: 150
+    FireDamage: 100
+    ShockDamage: 0
+    ColdDamage: 0
+    LightningDamage: 0
+    Accuracy: 300
+    Range: 2
+    CriticalProbability: 100
+    CriticalMagnification: 2
+    ShieldPierceProbability: 0
+    NumberOfAttacks: 2
+    MinimumDamage: 100
+    MaximumDamage: 200
+    Duration: 18.333334
+    PreDelay: 9.166667
+    PostDelay: 9.166667
+  AttackEffects: []
+  HitSounds: []
+  FireSounds: []
+--- !u!114 &2018033951348884737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd2cf18d7e7f584987b9611e57f7b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Class: 0
+  Blade:
+    Material: {fileID: 11400000, guid: cec8ff9cc82abe54ab930daf24e7396e, type: 2}
+    Length: 100
+    DefaultLength: 100
+  Handle:
+    Material: {fileID: 11400000, guid: cec8ff9cc82abe54ab930daf24e7396e, type: 2}
+    Length: 500
+    DefaultLength: 500
+  BladeType: 0
+  Axe:
+    MinimumLength: 50
+    MaximumLength: 200
+    BaseDamage: 100
+    BaseAccuracy: 100
+    MinimumDamage: 50
+    MaximumDamage: 150
+    BaseDuration: 10
+    PreDelay: 5
+    PostDelay: 5
+  Sword:
+    MinimumLength: 0
+    MaximumLength: 0
+    BaseDamage: 0
+    BaseAccuracy: 0
+    MinimumDamage: 0
+    MaximumDamage: 0
+    BaseDuration: 0
+    PreDelay: 0
+    PostDelay: 0
+  Spear:
+    MinimumLength: 0
+    MaximumLength: 0
+    BaseDamage: 0
+    BaseAccuracy: 0
+    MinimumDamage: 0
+    MaximumDamage: 0
+    BaseDuration: 0
+    PreDelay: 0
+    PostDelay: 0
+  Gear:
+    Penalty: 10
+    FireDamage: 100
+    ShockDamage: 0
+    ShieldPierceProbability: 0
+    ColdDamage: 0
+    LightningDamage: 0

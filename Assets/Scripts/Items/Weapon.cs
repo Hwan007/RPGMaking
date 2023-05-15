@@ -114,7 +114,7 @@ namespace ProjectCode
             Melee,
             Range
         }
-
+        [System.Serializable]
         public abstract class Property : ScriptableObject
         {
             public WeaponType Class;
@@ -258,9 +258,11 @@ public class WeaponEditor : Editor
     SerializedProperty m_WeaponStatProperty;
 
     List<string> m_AvailableWeaponTypeList;
-    SerializedProperty m_WeaponTypeStat;
+    SerializedProperty m_ComponentStat;
 
     Weapon.WeaponType sel;
+    bool show0;
+    bool show1;
     [MenuItem("Assets/Create/Item/Weapon", priority = -999)]
     static public void CreateWeapon()
     {
@@ -298,7 +300,7 @@ public class WeaponEditor : Editor
             .Select(type => type.Name)
             .ToList();
 
-        m_WeaponTypeStat = serializedObject.FindProperty(nameof(Weapon.WeaponProperty));
+        m_ComponentStat = serializedObject.FindProperty(nameof(Weapon.WeaponProperty));
         lookup = typeof(Weapon.Property);
         m_AvailableWeaponTypeList = System.AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
@@ -321,15 +323,26 @@ public class WeaponEditor : Editor
         m_ItemEditor.GUI();
 #if true
         GUILayout.BeginHorizontal();
-        EditorGUILayout.BeginVertical();
-        EditorGUILayout.PropertyField(m_WeaponStatProperty, new GUIContent("Weapon Stats"), true);
-        EditorGUILayout.EndVertical();
-        if(GUILayout.Button("Reload", GUILayout.MaxWidth(80.0f)))
+        show1 = EditorGUILayout.Foldout(show1, new GUIContent("Weapon Stats"));
+        if (GUILayout.Button("Reload", GUILayout.MaxWidth(80.0f)))
         {
             Debug.Log("Reload");
+            m_Target.WeaponStats = m_Target.WeaponProperty.Calculating();
+            m_WeaponStatProperty = serializedObject.FindProperty(nameof(Weapon.WeaponStats));
+            AssetDatabase.Refresh();
+
+            Editor edi = this;
+            edi.Repaint();
         }
         GUILayout.EndHorizontal();
-
+        if (show1 == true)
+        {
+            //EditorGUILayout.BeginVertical();
+            GUI.enabled = false;
+            EditorGUILayout.PropertyField(m_WeaponStatProperty, GUIContent.none, true);
+            GUI.enabled = true;
+            //EditorGUILayout.EndVertical();
+        }
 #else
         var child =  m_WeaponStatProperty.Copy();
         var depth = child.depth;
@@ -342,7 +355,7 @@ public class WeaponEditor : Editor
             child.NextVisible(false);
         }
 #endif
-        if (m_WeaponTypeStat.objectReferenceValue == null)
+        if (m_ComponentStat.objectReferenceValue == null)
         {
             GUILayout.BeginHorizontal();
             sel = (Weapon.WeaponType)EditorGUILayout.EnumPopup(new GUIContent("Add Stats"), sel, GUILayout.MaxWidth(250.0f));
@@ -362,13 +375,33 @@ public class WeaponEditor : Editor
 
                 AssetDatabase.AddObjectToAsset(newinstance, target);
 
-                m_WeaponTypeStat.objectReferenceValue = newinstance;
+                m_ComponentStat.objectReferenceValue = newinstance;
             }
             GUILayout.EndHorizontal();
         }
         else
         {
+            GUILayout.BeginHorizontal();
+            //EditorGUILayout.PropertyField(m_ComponentStat, new GUIContent("Component Stats"), true);
+            EditorGUILayout.BeginVertical();
+            var position = EditorGUILayout.GetControlRect();
+            show0 = EditorGUI.Foldout(position, show0, new GUIContent("Component Stats"));
+            if (show0 == true)
+            {
+                EditorGUI.indentLevel++;
+                Editor edi = null;
+                Editor.CreateCachedEditor(m_ComponentStat.objectReferenceValue, null, ref edi);
+                edi.OnInspectorGUI();
+                EditorGUI.indentLevel--;
+            }
+            EditorGUILayout.EndVertical();
 
+
+            if (GUILayout.Button(("Delete"), GUILayout.MaxWidth(80.0f)))
+            {
+                DestroyImmediate(m_ComponentStat.objectReferenceValue, true);
+            }
+            GUILayout.EndHorizontal();
         }
 
         EditorGUILayout.PropertyField(m_HitSoundProps, true);
