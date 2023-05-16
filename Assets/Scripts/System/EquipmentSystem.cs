@@ -49,9 +49,9 @@ namespace ProjectCode
                     return m_LegsSlot;
                 case MechEquipment.MechSlot.Arm:
                     return m_ArmsSlot;
-                case (MechEquipment.MechSlot)100:
+                case MechEquipment.MechSlot.LeftWeapon:
                     return LeftWeapon as MechEquipment;
-                case (MechEquipment.MechSlot)200:
+                case MechEquipment.MechSlot.RightWeapon:
                     return RightWeapon as MechEquipment;
                 default:
                     return null;
@@ -95,13 +95,13 @@ namespace ProjectCode
                         m_ArmsSlot.EquippedBy(m_Owner);
                     }
                     break;
-                case (MechEquipment.MechSlot)100:
+                case MechEquipment.MechSlot.LeftWeapon:
                     {
                         LeftWeapon = item as Weapon;
                         LeftWeapon.EquippedBy(m_Owner);
                     }
                     break;
-                case (MechEquipment.MechSlot)200:
+                case MechEquipment.MechSlot.RightWeapon:
                     {
                         RightWeapon = item as Weapon;
                         RightWeapon.EquippedBy(m_Owner);
@@ -155,7 +155,7 @@ namespace ProjectCode
                         m_ArmsSlot = null;
                     }
                     break;
-                case (MechEquipment.MechSlot)100:
+                case MechEquipment.MechSlot.LeftWeapon:
                     if (LeftWeapon != null &&
                         (LeftWeapon != m_DefaultLeftWeapon || isReplacement))
                     {
@@ -171,7 +171,7 @@ namespace ProjectCode
                             Equip(m_DefaultLeftWeapon);
                     }
                     break;
-                case (MechEquipment.MechSlot)200:
+                case MechEquipment.MechSlot.RightWeapon:
                     if (RightWeapon != null &&
                         (RightWeapon != m_DefaultRightWeapon || isReplacement))
                     {
