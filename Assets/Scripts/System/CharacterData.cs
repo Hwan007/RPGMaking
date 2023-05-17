@@ -8,7 +8,7 @@ using UnityEditor;
 
 namespace ProjectCode
 {
-    public enum ActionList
+    public enum UnitAction
     {
         Move,
         StandAttack,
@@ -17,7 +17,7 @@ namespace ProjectCode
     }
     public class BattleAction
     {
-        public ActionList Act;
+        public UnitAction Act;
         public int count;
         public float PreDelay;
         public float Duration;
@@ -59,10 +59,13 @@ namespace ProjectCode
         void Update()
         {
             Stats.Tick();
-            ActionQueue();
             
             if (m_ActionCoolDown > 0.0f)
                 m_ActionCoolDown -= Time.deltaTime;
+            else
+            {
+                ActionQueue();
+            }
             
         }
 
@@ -110,37 +113,90 @@ namespace ProjectCode
             }
         }
 
+        /// <summary>
+        /// 행동을 마지막 순서에 넣는다.
+        /// </summary>
         public void AddAction(BattleAction act)
         {
+            Debug.Log("AddAction : " + act.Act + " / " + ActionList.Count);
             ActionList.Add(act);
         }
 
-        public void UndoAction()
+        /// <summary>
+        /// 현재 수행중인 행동을 취소한다.
+        /// 수행중이지 않는 경우에는 다음 행동을 취소한다.
+        /// </summary>
+        public void CancelAction()
         {
-            if (ActionList[ActionList.Count].OnActing)
+            BattleAction act = ActionList[0];
+            Debug.Log("CancelAction : " + act.Act + " / " + ActionList.Count);
+            if (act.OnActing == true)
             {
-                BattleAction act = ActionList[ActionList.Count];
-                m_ActionCoolDown = act.PostDelay;
+                m_ActionCoolDown += act.PostDelay;
+                ActionList[0].count = 0;
+                Debug.Log("ActionCoolDown : " + m_ActionCoolDown);
             }
-            else
-            {
-                ActionList.RemoveAt(ActionList.Count);
-            }
+            ActionList.RemoveAt(0);
+            Debug.Log(" => " + " / " + ActionList.Count);
         }
 
+        /// <summary>
+        /// 마지막에 넣은 행동을 취소한다.
+        /// 수행중인 경우에는 딜레이를 적용하고 취소한다.
+        /// </summary>
+        public void UndoAction()
+        {
+            if (ActionList[ActionList.Count-1].OnActing)
+            {
+                BattleAction act = ActionList[ActionList.Count-1];
+                m_ActionCoolDown += act.PostDelay;
+                ActionList[ActionList.Count - 1].count = 0;
+            }
+            ActionList.RemoveAt(ActionList.Count-1);
+        }
+
+        /// <summary>
+        /// 행동 순서에 대한 딜레이를 넣는다.
+        /// 행동 순서에 대한 동작을 불러온다.
+        /// </summary>
         public void ActionQueue()
         {
             if (ActionList.Count != 0 && ActionList[0].OnActing == false)
             {
                 BattleAction act = ActionList[0];
-                Debug.Log("ActionList : " + act.Act + " / " + act.count);
-                m_ActionCoolDown = act.PreDelay + act.PostDelay + act.Duration * act.count;
                 ActionList[0].OnActing = true;
+                Debug.Log("ActionList : " + act.Act + " / " + act.count);
+                m_ActionCoolDown = act.PreDelay;// + act.PostDelay + act.Duration * act.count;
             }
-            else if (ActionList[0].OnActing == false && m_ActionCoolDown <= 0)
+            else if (ActionList[0].OnActing == true)
             {
+                BattleAction act = ActionList[0];
                 Debug.Log("ActionList : " + ActionList[0].Act + " / " + ActionList[0].count);
-                ActionList.RemoveAt(0);
+                if (act.count != 0)
+                {
+                    m_ActionCoolDown = act.Duration;
+                    act.count--;
+                    // 행동에 대한 동작을 수행한다.
+                    Debug.Log("Act " + act.Act);
+                    switch (act.Act)
+                    {
+                        case UnitAction.Move:
+                            break;
+                        case UnitAction.StandAttack:
+                            break;
+                        case UnitAction.ChargeAttack:
+                            break;
+                        case UnitAction.Skill:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    m_ActionCoolDown = act.PostDelay;
+                    ActionList.RemoveAt(0);
+                }
             }
         }
         /*
