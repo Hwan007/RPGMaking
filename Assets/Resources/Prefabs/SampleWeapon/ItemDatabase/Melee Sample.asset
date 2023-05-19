@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03b6c51e7eb7134f87268672979a5c3, type: 3}
   m_Name: Melee Sample
   m_EditorClassIdentifier: 
-  ItemName: 
+  ItemName: Sampel Melee Weapon
   ItemIcon: {fileID: 0}
-  Description: 
+  Description: Sampel Melee Weapon
   WorldObjectPrefab: {fileID: 0}
   Sprite:
   - {fileID: 0}
   - {fileID: 0}
+  PartSlot: 0
   SlotStat: {fileID: 0}
   EquippedEffects: []
   WeaponProperty: {fileID: 2018033951348884737}

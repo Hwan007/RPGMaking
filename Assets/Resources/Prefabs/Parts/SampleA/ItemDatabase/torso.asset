@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4026da926314b754c8c2ed79e105459b, type: 3}
   m_Name: torso
   m_EditorClassIdentifier: 
-  ItemName: sample body
-  ItemSprite: {fileID: 21300000, guid: 37465b80f35c9df43a2303f3a8bcf072, type: 3}
-  Description: sample body
+  ItemName: sample torso
+  ItemIcon: {fileID: 0}
+  Description: sample torso
   WorldObjectPrefab: {fileID: 6310482049111969388, guid: de6b5862284528c428ed308034fa6a97, type: 3}
+  Sprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  PartSlot: 1
   SlotStat: {fileID: 2958366967486609745}
   EquippedEffects: []
 --- !u!114 &2958366967486609745
@@ -31,7 +35,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Description: 
-  PartSlot: 1
   Modifier:
     ModifierMode: 1
     Stats:
@@ -42,3 +45,9 @@ MonoBehaviour:
       elementalBoosts: 0000000000000000000000000000000000000000
   OutputPower: 500
   CoreSlot: 2
+  TorsoJoint:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
