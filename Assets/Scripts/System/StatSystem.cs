@@ -28,7 +28,6 @@ namespace ProjectCode
             Fire,
             Cold,
             Electric,
-            Acid
             //ADD YOUR CUSTOM TYPE AFTER
         }
 

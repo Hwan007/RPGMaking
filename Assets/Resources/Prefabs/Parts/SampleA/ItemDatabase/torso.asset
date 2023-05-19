@@ -19,7 +19,6 @@ MonoBehaviour:
   Sprite:
   - {fileID: 0}
   - {fileID: 0}
-  PartSlot: 1
   SlotStat: {fileID: 2958366967486609745}
   EquippedEffects: []
 --- !u!114 &2958366967486609745
@@ -34,7 +33,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe2808b96833a74c96aacfe76c54322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: 
+  Description: tt
+  PartSlot: 1
   Modifier:
     ModifierMode: 1
     Stats:

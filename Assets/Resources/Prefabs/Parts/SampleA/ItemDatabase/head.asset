@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcdcd02ca15fac24bbf47f16b91d5b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: 
+  Description: hh
   PartSlot: 0
   Modifier:
     ModifierMode: 1
@@ -23,6 +23,8 @@ MonoBehaviour:
       elementalProtection: 0200000002000000020000000200000002000000
       elementalBoosts: 0000000000000000000000000000000000000000
   RequiredPower: 100
+  HeadJoint:
+  - {x: 0, y: 0, z: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,8 +38,11 @@ MonoBehaviour:
   m_Name: head
   m_EditorClassIdentifier: 
   ItemName: sample head
-  ItemSprite: {fileID: 21300000, guid: 1f8c045cdc917d3468b7c759d31c6d1b, type: 3}
+  ItemIcon: {fileID: 0}
   Description: sample head
   WorldObjectPrefab: {fileID: 6310482049111969388, guid: 183f9eac6a0b80245991146094f53d04, type: 3}
+  Sprite:
+  - {fileID: 0}
+  - {fileID: 0}
   SlotStat: {fileID: -5694858880153644172}
   EquippedEffects: []

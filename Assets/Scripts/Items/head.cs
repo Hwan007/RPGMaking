@@ -25,7 +25,7 @@ namespace ProjectCode
         {
             user.Stats.RemoveModifier(Modifier);
         }
-        public override MechEquipment.MechSlot GetSlot()
+        public override MechEquipment.MechSlot SlotInfo()
         {
             base.PartSlot = MechEquipment.MechSlot.Head;
             return base.PartSlot;

@@ -42,7 +42,7 @@ namespace ProjectCode
         {
             public string Description;
             public MechSlot PartSlot;
-            public virtual MechSlot GetSlot()
+            public virtual MechSlot SlotInfo()
             {
                 return PartSlot;
             }

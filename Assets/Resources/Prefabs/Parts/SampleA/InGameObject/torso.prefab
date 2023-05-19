@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5204972396617192875}
   - component: {fileID: 1158432397858055862}
-  - component: {fileID: 3668530663148937795}
   m_Layer: 0
   m_Name: torso
   m_TagString: Untagged
@@ -85,16 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3668530663148937795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6310482049111969388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fa75f995e7109544ab851e50dfbd8a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: {fileID: 11400000, guid: ddb78fc73ab026c40ba67d2a6086c3b1, type: 2}
