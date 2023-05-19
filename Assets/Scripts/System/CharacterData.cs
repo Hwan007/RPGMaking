@@ -51,6 +51,20 @@ namespace ProjectCode
             Equipment.Init(this);
         }
 
+        public void SetUnit(string name, StatSystem stat, EquipmentSystem equip)
+        {
+            CharacterName = name;
+            Stats.stats.Copy(stat.stats);
+            Equipment.Copy(equip);
+        }
+
+        public void GetUnit(ref string getName, ref StatSystem getStat, ref EquipmentSystem getEquipment)
+        {
+            getName = CharacterName;
+            getStat.stats.Copy(Stats.stats);
+            getEquipment.Copy(Equipment);
+        }
+
         void Awake()
         {
 

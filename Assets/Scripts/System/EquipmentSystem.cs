@@ -32,6 +32,16 @@ namespace ProjectCode
         {
             m_Owner = owner;
         }
+
+        public void Copy(EquipmentSystem system)
+        {
+            system.Equip(MechEquipment.MechSlot.Head, m_HeadSlot);
+            system.Equip(MechEquipment.MechSlot.Torso, m_TorsoSlot);
+            system.Equip(MechEquipment.MechSlot.Leg, m_LegsSlot);
+            system.Equip(MechEquipment.MechSlot.Arm, m_ArmsSlot);
+            system.Equip(MechEquipment.MechSlot.LeftWeapon, LeftWeapon);
+            system.Equip(MechEquipment.MechSlot.RightWeapon, RightWeapon);
+        }
         public void InitWeapon(Weapon wep, CharacterData data)
         {
             m_DefaultRightWeapon = wep;
@@ -63,13 +73,13 @@ namespace ProjectCode
         /// inventory before calling equip!
         /// </summary>
         /// <param name="item">Which item to equip</param>
-        public void Equip(MechEquipment item)
+        public void Equip(MechEquipment.MechSlot slot, MechEquipment item)
         {
-            Unequip(item.SlotStat.PartSlot, true);
+            //Unequip(item.SlotStat.PartSlot, true);
 
             OnEquiped?.Invoke(item);
 
-            switch (item.SlotStat.PartSlot)
+            switch (slot)
             {
                 case MechEquipment.MechSlot.Head:
                     {
@@ -168,7 +178,7 @@ namespace ProjectCode
                         LeftWeapon = null;
 
                         if (!isReplacement)
-                            Equip(m_DefaultLeftWeapon);
+                            Equip(MechEquipment.MechSlot.LeftWeapon, m_DefaultLeftWeapon);
                     }
                     break;
                 case MechEquipment.MechSlot.RightWeapon:
@@ -184,7 +194,7 @@ namespace ProjectCode
                         RightWeapon = null;
 
                         if (!isReplacement)
-                            Equip(m_DefaultRightWeapon);
+                            Equip(MechEquipment.MechSlot.RightWeapon, m_DefaultRightWeapon);
                     }
                     break;
                 default:
