@@ -35,12 +35,12 @@ namespace ProjectCode
 
         public void Copy(EquipmentSystem system)
         {
-            system.Equip(MechEquipment.MechSlot.Head, m_HeadSlot);
-            system.Equip(MechEquipment.MechSlot.Torso, m_TorsoSlot);
-            system.Equip(MechEquipment.MechSlot.Leg, m_LegsSlot);
-            system.Equip(MechEquipment.MechSlot.Arm, m_ArmsSlot);
-            system.Equip(MechEquipment.MechSlot.LeftWeapon, LeftWeapon);
-            system.Equip(MechEquipment.MechSlot.RightWeapon, RightWeapon);
+            system.Equip(MechEquipment.MechSlot.head, m_HeadSlot);
+            system.Equip(MechEquipment.MechSlot.torso, m_TorsoSlot);
+            system.Equip(MechEquipment.MechSlot.leg, m_LegsSlot);
+            system.Equip(MechEquipment.MechSlot.arm, m_ArmsSlot);
+            system.Equip(MechEquipment.MechSlot.left_weapon, LeftWeapon);
+            system.Equip(MechEquipment.MechSlot.right_weapon, RightWeapon);
         }
         public void InitWeapon(Weapon wep, CharacterData data)
         {
@@ -51,17 +51,17 @@ namespace ProjectCode
         {
             switch (slot)
             {
-                case MechEquipment.MechSlot.Head:
+                case MechEquipment.MechSlot.head:
                     return m_HeadSlot;
-                case MechEquipment.MechSlot.Torso:
+                case MechEquipment.MechSlot.torso:
                     return m_TorsoSlot;
-                case MechEquipment.MechSlot.Leg:
+                case MechEquipment.MechSlot.leg:
                     return m_LegsSlot;
-                case MechEquipment.MechSlot.Arm:
+                case MechEquipment.MechSlot.arm:
                     return m_ArmsSlot;
-                case MechEquipment.MechSlot.LeftWeapon:
+                case MechEquipment.MechSlot.left_weapon:
                     return LeftWeapon as MechEquipment;
-                case MechEquipment.MechSlot.RightWeapon:
+                case MechEquipment.MechSlot.right_weapon:
                     return RightWeapon as MechEquipment;
                 default:
                     return null;
@@ -81,37 +81,37 @@ namespace ProjectCode
 
             switch (slot)
             {
-                case MechEquipment.MechSlot.Head:
+                case MechEquipment.MechSlot.head:
                     {
                         m_HeadSlot = item;
                         m_HeadSlot.EquippedBy(m_Owner);
                     }
                     break;
-                case MechEquipment.MechSlot.Torso:
+                case MechEquipment.MechSlot.torso:
                     {
                         m_TorsoSlot = item;
                         m_TorsoSlot.EquippedBy(m_Owner);
                     }
                     break;
-                case MechEquipment.MechSlot.Leg:
+                case MechEquipment.MechSlot.leg:
                     {
                         m_LegsSlot = item;
                         m_LegsSlot.EquippedBy(m_Owner);
                     }
                     break;
-                case MechEquipment.MechSlot.Arm:
+                case MechEquipment.MechSlot.arm:
                     {
                         m_ArmsSlot = item;
                         m_ArmsSlot.EquippedBy(m_Owner);
                     }
                     break;
-                case MechEquipment.MechSlot.LeftWeapon:
+                case MechEquipment.MechSlot.left_weapon:
                     {
                         LeftWeapon = item as Weapon;
                         LeftWeapon.EquippedBy(m_Owner);
                     }
                     break;
-                case MechEquipment.MechSlot.RightWeapon:
+                case MechEquipment.MechSlot.right_weapon:
                     {
                         RightWeapon = item as Weapon;
                         RightWeapon.EquippedBy(m_Owner);
@@ -133,7 +133,7 @@ namespace ProjectCode
         {
             switch (slot)
             {
-                case MechEquipment.MechSlot.Head:
+                case MechEquipment.MechSlot.head:
                     if (m_HeadSlot != null)
                     {
                         m_HeadSlot.UnequippedBy(m_Owner);
@@ -141,7 +141,7 @@ namespace ProjectCode
                         m_HeadSlot = null;
                     }
                     break;
-                case MechEquipment.MechSlot.Torso:
+                case MechEquipment.MechSlot.torso:
                     if (m_TorsoSlot != null)
                     {
                         m_TorsoSlot.UnequippedBy(m_Owner);
@@ -149,7 +149,7 @@ namespace ProjectCode
                         m_TorsoSlot = null;
                     }
                     break;
-                case MechEquipment.MechSlot.Leg:
+                case MechEquipment.MechSlot.leg:
                     if (m_LegsSlot != null)
                     {
                         m_LegsSlot.UnequippedBy(m_Owner);
@@ -157,7 +157,7 @@ namespace ProjectCode
                         m_LegsSlot = null;
                     }
                     break;
-                case MechEquipment.MechSlot.Arm:
+                case MechEquipment.MechSlot.arm:
                     if (m_ArmsSlot != null)
                     {
                         m_ArmsSlot.UnequippedBy(m_Owner);
@@ -165,7 +165,7 @@ namespace ProjectCode
                         m_ArmsSlot = null;
                     }
                     break;
-                case MechEquipment.MechSlot.LeftWeapon:
+                case MechEquipment.MechSlot.left_weapon:
                     if (LeftWeapon != null &&
                         (LeftWeapon != m_DefaultLeftWeapon || isReplacement))
                     {
@@ -178,10 +178,10 @@ namespace ProjectCode
                         LeftWeapon = null;
 
                         if (!isReplacement)
-                            Equip(MechEquipment.MechSlot.LeftWeapon, m_DefaultLeftWeapon);
+                            Equip(MechEquipment.MechSlot.left_weapon, m_DefaultLeftWeapon);
                     }
                     break;
-                case MechEquipment.MechSlot.RightWeapon:
+                case MechEquipment.MechSlot.right_weapon:
                     if (RightWeapon != null &&
                         (RightWeapon != m_DefaultRightWeapon || isReplacement))
                     {
@@ -194,7 +194,7 @@ namespace ProjectCode
                         RightWeapon = null;
 
                         if (!isReplacement)
-                            Equip(MechEquipment.MechSlot.RightWeapon, m_DefaultRightWeapon);
+                            Equip(MechEquipment.MechSlot.right_weapon, m_DefaultRightWeapon);
                     }
                     break;
                 default:

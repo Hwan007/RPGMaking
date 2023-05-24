@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectCode;
 using System.Linq;
-
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,15 +12,19 @@ namespace ProjectCode
     [CreateAssetMenu(fileName = "Mech Equipment", menuName = "Item/Mech Equipment", order = -999)]
     public class MechEquipment : Item
     {
+        public MechEquipment()
+        {
+            
+        }
         public Sprite[] Sprite = new Sprite[2];
         public enum MechSlot
         {
-            Head,
-            Torso,
-            Arm,
-            Leg,
-            LeftWeapon,
-            RightWeapon,
+            head,
+            torso,
+            arm,
+            leg,
+            left_weapon,
+            right_weapon,
             Core
         }
         /*

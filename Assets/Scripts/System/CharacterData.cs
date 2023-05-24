@@ -117,11 +117,11 @@ namespace ProjectCode
 
         public void Attack(CharacterData target, MechEquipment.MechSlot part)
         {
-            if (part == MechEquipment.MechSlot.LeftWeapon)
+            if (part == MechEquipment.MechSlot.left_weapon)
             {
                 Equipment.LeftWeapon.Attack(this, target);
             }
-            else if (part == MechEquipment.MechSlot.RightWeapon)
+            else if (part == MechEquipment.MechSlot.right_weapon)
             {
                 Equipment.RightWeapon.Attack(this, target);
             }

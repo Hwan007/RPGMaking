@@ -27,7 +27,7 @@ namespace ProjectCode
         }
         public override MechEquipment.MechSlot SlotInfo()
         {
-            base.PartSlot = MechEquipment.MechSlot.Head;
+            base.PartSlot = MechEquipment.MechSlot.head;
             return base.PartSlot;
         }
     }

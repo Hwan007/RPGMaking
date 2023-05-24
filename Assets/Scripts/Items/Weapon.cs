@@ -17,6 +17,10 @@ namespace ProjectCode
     /// </summary>
     public class Weapon : MechEquipment
     {
+        public Weapon()
+        {
+
+        }
         /// <summary>
         /// This class will store damage done to a target CharacterData by a source CharacterData. The function to add
         /// damage will take care of applied all the strength/boost of the source and remove defense/resistance of the

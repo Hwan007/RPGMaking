@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 5204972396617192875}
   - component: {fileID: 6428007694632947019}
   - component: {fileID: 8803498076287335910}
-  - component: {fileID: 1994804707471793125}
   m_Layer: 0
-  m_Name: weapon
+  m_Name: Melee Sample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,16 +98,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1994804707471793125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6310482049111969388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fa75f995e7109544ab851e50dfbd8a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  part: {fileID: 11400000, guid: 27c63c6e9b932724785a24a74fccbc7c, type: 2}
