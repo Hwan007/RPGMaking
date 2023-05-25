@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectCode;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace ProjectCode
 {
@@ -10,6 +11,7 @@ namespace ProjectCode
     {
         CameraRay CameraRay;
         UnitInfo Character;
+        Text info;
 
         void Start()
         {
