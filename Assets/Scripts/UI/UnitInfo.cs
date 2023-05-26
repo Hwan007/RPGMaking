@@ -33,7 +33,7 @@ namespace ProjectCode
 
         private void Awake()
         {
-
+            ClearUnitInfo();
         }
 
         public void Start()
@@ -130,6 +130,9 @@ namespace ProjectCode
             WeaponList.Insert(0, tempwea);
         }
 
+        /// <summary>
+        /// Clear Item List
+        /// </summary>
         public void ClearItem()
         {
             HeadList.Clear();
@@ -140,20 +143,38 @@ namespace ProjectCode
             Debug.Log("Clear item list");
         }
 
-        public void SaveUnitInfo()
+        /// <summary>
+        /// Save Unit part information that user select
+        /// </summary>
+        /// <returns></returns>
+        public bool SaveUnitInfo()
         {
-            CharacterData unit = new CharacterData();
-            unit.Equipment.Equip(MechEquipment.MechSlot.head, HeadList[h]);
-            unit.Equipment.Equip(MechEquipment.MechSlot.torso, TorsoList[t]);
-            unit.Equipment.Equip(MechEquipment.MechSlot.arm, ArmList[a]);
-            unit.Equipment.Equip(MechEquipment.MechSlot.leg, LegList[l]);
-            unit.Equipment.Equip(MechEquipment.MechSlot.right_weapon, WeaponList[rw]);
-            unit.Equipment.Equip(MechEquipment.MechSlot.left_weapon, WeaponList[lw]);
-            // pilot 추가
-            Unit.Add(unit);
-            Debug.Log("Save Unit Info");
+            bool ret = false;
+
+            if (h == 0 || t == 0 || a==0 || l==0 || (rw==0 && lw==0))
+                ret = false;
+            else
+            {
+                CharacterData unit = new CharacterData();
+                unit.Equipment.Equip(MechEquipment.MechSlot.head, HeadList[h]);
+                unit.Equipment.Equip(MechEquipment.MechSlot.torso, TorsoList[t]);
+                unit.Equipment.Equip(MechEquipment.MechSlot.arm, ArmList[a]);
+                unit.Equipment.Equip(MechEquipment.MechSlot.leg, LegList[l]);
+                if (rw != 0)
+                    unit.Equipment.Equip(MechEquipment.MechSlot.right_weapon, WeaponList[rw]);
+                if (lw != 0)
+                    unit.Equipment.Equip(MechEquipment.MechSlot.left_weapon, WeaponList[lw]);
+                // pilot 추가
+                Unit.Add(unit);
+                Debug.Log("Save Unit Info");
+            }
+
+            return ret;
         }
 
+        /// <summary>
+        /// Clear Unit list information that user saved
+        /// </summary>
         public void ClearUnitInfo()
         {
             Unit.Clear();

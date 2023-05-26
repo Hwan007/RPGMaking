@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6620940431095040021}
   - component: {fileID: 2036569901985138089}
   m_Layer: 0
-  m_Name: background
+  m_Name: PartBackWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

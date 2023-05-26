@@ -13,6 +13,7 @@ namespace ProjectCode
         UnitInfo Character;
         Text info;
 
+        public GameObject NotEnoughParts;
         void Start()
         {
             Character = GameObject.Find("Character").gameObject.GetComponent<UnitInfo>();
@@ -21,12 +22,37 @@ namespace ProjectCode
 
         void Update()
         {
-             
+            if (popup == true)
+            {
+                if (transform.Find("popup").childCount == 0)
+                    popup = false;
+            }
         }
 
+        bool popup = false;
         public void SetBtn()
         {
-            Character.SaveUnitInfo();
+            bool ret = false;
+            ret = Character.SaveUnitInfo();
+
+            if (ret == false && popup == false)
+            {
+                GameObject Prefab = Instantiate(NotEnoughParts);
+                Prefab.transform.SetParent(transform.Find("popup"));
+                Prefab.transform.localPosition = Vector3.zero;
+                Prefab.transform.localScale = Vector3.one;
+                popup = true;
+            }
+        }
+
+        public void ClearUnitBtn()
+        {
+            Character.InitItem();
+        }
+
+        public void ClearListBtn()
+        {
+            Character.ClearUnitInfo();
         }
 
         public void RightArrowBtn()
@@ -95,10 +121,11 @@ namespace ProjectCode
 
         public void SceneBattle()
         {
+            
             SceneManager.LoadScene("BattleScene");
         }
 
-        public void SceneStart()
+        public void SceneMainMenu()
         {
             SceneManager.LoadScene("StartScene");
         }
