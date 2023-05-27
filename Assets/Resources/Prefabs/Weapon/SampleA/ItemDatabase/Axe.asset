@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e03b6c51e7eb7134f87268672979a5c3, type: 3}
-  m_Name: Melee Sample
+  m_Name: Axe
   m_EditorClassIdentifier: 
   ItemName: Sample Melee Weapon
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 3bbe36738ab730441ad0dcbbba1f2bd6, type: 3}
   Description: Sample Melee Weapon
-  WorldObjectPrefab: {fileID: 6310482049111969388, guid: d81f8fe390f5e1e4b83c410eb7cc93ae, type: 3}
+  WorldObjectPrefab: {fileID: 6310482049111969388, guid: ea6c2ea8f8ffa1443a626a15ff7168dc, type: 3}
   Sprite:
   - {fileID: 0}
   - {fileID: 0}

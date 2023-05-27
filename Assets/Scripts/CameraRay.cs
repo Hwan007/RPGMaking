@@ -159,8 +159,10 @@ namespace ProjectCode
                 if (results.Count > 1)
                 {
                     UICheck = true;
+                    /*
                     for (int n = 0; n < results.Count; n++)
                         Debug.Log("No." + n + " mouse ray hit object : " + results[n].gameObject.name);
+                    */
                 }
 
                 // If UI Image is filled than 'hitImgae' isn't null.

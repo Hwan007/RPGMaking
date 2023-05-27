@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1f8c045cdc917d3468b7c759d31c6d1b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0bc9babcc470eb48b24581f8629eeac, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5204972396617192875}
   m_Layer: 0
-  m_Name: head
+  m_Name: leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 2513616499894247279}
   - component: {fileID: 8937531593735903273}
   m_Layer: 5
-  m_Name: icon
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

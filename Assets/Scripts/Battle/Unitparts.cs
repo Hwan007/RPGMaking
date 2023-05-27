@@ -6,15 +6,16 @@ public class Unitparts : MonoBehaviour
 {
     // Start is called before the first frame update
     public Quaternion normalDirection;
+    Unit ScriptUnit;
     void Start()
     {
-        
+        ScriptUnit = transform.parent.GetComponent<Unit>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        normalDirection = transform.parent.GetComponent<Unit>().normalDirection;
+        normalDirection = ScriptUnit.normalDirection;
         if (gameObject.name == "head")
         {
             transform.LookAt(Camera.main.transform.position);

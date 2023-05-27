@@ -38,7 +38,7 @@ MonoBehaviour:
   m_Name: head
   m_EditorClassIdentifier: 
   ItemName: sample head
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 1f8c045cdc917d3468b7c759d31c6d1b, type: 3}
   Description: sample head
   WorldObjectPrefab: {fileID: 6310482049111969388, guid: 183f9eac6a0b80245991146094f53d04, type: 3}
   Sprite:

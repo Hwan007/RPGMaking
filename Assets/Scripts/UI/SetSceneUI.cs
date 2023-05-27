@@ -33,7 +33,7 @@ namespace ProjectCode
         public void SetBtn()
         {
             bool ret = false;
-            ret = Character.SaveUnitInfo();
+            ret = Character.UpdateUnitInfo();
 
             if (ret == false && popup == false)
             {
@@ -121,7 +121,8 @@ namespace ProjectCode
 
         public void SceneBattle()
         {
-            
+            SaveUnitList.UnitList.Ally.Clear();
+            Character.SaveUnitInfo();
             SceneManager.LoadScene("BattleScene");
         }
 

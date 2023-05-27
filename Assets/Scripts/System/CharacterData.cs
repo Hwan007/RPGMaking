@@ -182,7 +182,7 @@ namespace ProjectCode
                 Debug.Log("ActionList : " + act.Act + " / " + act.count);
                 m_ActionCoolDown = act.PreDelay;// + act.PostDelay + act.Duration * act.count;
             }
-            else if (ActionList[0].OnActing == true)
+            else if (ActionList.Count != 0 && ActionList[0].OnActing == true)
             {
                 BattleAction act = ActionList[0];
                 Debug.Log("ActionList : " + ActionList[0].Act + " / " + ActionList[0].count);

@@ -38,9 +38,9 @@ MonoBehaviour:
   m_Name: arm
   m_EditorClassIdentifier: 
   ItemName: sample arm
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 21300000, guid: 83393502529636d4ebd7d0450b4416a3, type: 3}
   Description: sample arm
-  WorldObjectPrefab: {fileID: 6310482049111969388, guid: 578ab6193e46a764582daeb14d7b9f97, type: 3}
+  WorldObjectPrefab: {fileID: 6310482049111969388, guid: 1754ffac9656abc439bfa993ba5d9042, type: 3}
   Sprite:
   - {fileID: 0}
   - {fileID: 0}
