@@ -19,7 +19,7 @@ public class MainCamera : MonoBehaviour
     void Start()
     {
         main = GetComponent<Camera>();
-        transform.parent = GameObject.Find("Camera Target").transform;
+        transform.SetParent(GameObject.Find("Camera Target").transform);
         //position = 3;
         //transform.localPosition = new Vector3(0, 0, -distance[position]);
         transform.localPosition = Position;

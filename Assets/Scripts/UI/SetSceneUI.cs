@@ -43,16 +43,42 @@ namespace ProjectCode
                 Prefab.transform.localScale = Vector3.one;
                 popup = true;
             }
+            else
+            {
+                AddUnitToList(Character.Unit.Count-1);
+                Character.InitUnit();
+            }
+        }
+        public GameObject ListIcon;
+        class ListInfo
+        {
+            public int no;
+            public GameObject icon;
+        }
+        List<ListInfo> Lists = new List<ListInfo>();
+        public void AddUnitToList(int i)
+        {
+            var unit = Instantiate(ListIcon, transform.GetChild(transform.childCount-1).GetChild(0).GetChild(0).GetChild(0));
+            unit.name = "List " + (Character.Unit.Count-1);
+            var script = unit.GetComponent<ListIcon>();
+            script.no = Character.Unit[Character.Unit.Count - 1].index;
+            ListInfo info = new ListInfo { no = script.no, icon = unit };
+            Lists.Add(info);
+        }
+
+        public void DeleteUnitBtn()
+        {
+            
         }
 
         public void ClearUnitBtn()
         {
-            Character.InitItem();
+            Character.InitUnit();
         }
 
         public void ClearListBtn()
         {
-            Character.ClearUnitInfo();
+            Character.ClearUnitList();
         }
 
         public void RightArrowBtn()

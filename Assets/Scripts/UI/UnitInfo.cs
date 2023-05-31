@@ -13,7 +13,7 @@ namespace ProjectCode
         private List<MechEquipment> LegList = new List<MechEquipment>();
         private List<Weapon> WeaponList = new List<Weapon>();
 
-        private List<CharacterData> Unit = new List<CharacterData>();
+        public List<EquipData> Unit = new List<EquipData>();
 
         public Text[] info = new Text[6];
 
@@ -31,16 +31,16 @@ namespace ProjectCode
 
         private void Awake()
         {
-            ClearUnitInfo();
+            ClearUnitList();
         }
 
         public void Start()
         {
             LoadItem();
-            InitItem();
+            InitUnit();
         }
 
-        public void InitItem()
+        public void InitUnit()
         {
             Transform PrefabTransform;
 
@@ -67,7 +67,7 @@ namespace ProjectCode
 
                 if (PrefabTransform != null)
                 {
-                    PrefabTransform.parent = par;
+                    PrefabTransform.SetParent(par);
                     PrefabTransform.localPosition = new Vector3(0, 0, 0);
                 }
             }
@@ -140,7 +140,7 @@ namespace ProjectCode
             WeaponList.Clear();
             Debug.Log("Clear item list");
         }
-
+        int tempNo=0;
         /// <summary>
         /// Save Unit part information that user select
         /// </summary>
@@ -153,7 +153,8 @@ namespace ProjectCode
                 ret = false;
             else
             {
-                CharacterData unit = new CharacterData();
+                EquipData unit = new EquipData();
+                unit.index = tempNo++;
                 unit.Equipment.Equip(MechEquipment.MechSlot.head, HeadList[h]);
                 unit.Equipment.Equip(MechEquipment.MechSlot.torso, TorsoList[t]);
                 unit.Equipment.Equip(MechEquipment.MechSlot.arm, ArmList[a]);
@@ -165,20 +166,56 @@ namespace ProjectCode
                 // pilot Ãß°¡
                 Unit.Add(unit);
                 Debug.Log("Save Unit Info");
+                ret = true;
             }
 
             return ret;
         }
 
+        public int ListIndex=0;
+        public int GetUnitFromList(int ListInfoNo)
+        {
+            Transform PrefabTransform;
+            ListIndex = ListInfoNo;
+            for (int no = 0; no < PartName.Length; no++)
+            {
+                Transform par = transform.Find(PartName[no]).Find("part");
+                if (par.childCount > 0)
+                    Destroy(par.GetChild(0).gameObject);
+                
+                PrefabTransform = Instantiate(Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.head).WorldObjectPrefab, par).transform;
+                PrefabTransform = Instantiate(Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.torso).WorldObjectPrefab, par).transform;
+                PrefabTransform = Instantiate(Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.arm).WorldObjectPrefab, par).transform;
+                PrefabTransform = Instantiate(Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.leg).WorldObjectPrefab, par).transform;
+                if (Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.left_weapon) != null)
+                    PrefabTransform = Instantiate(Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.left_weapon).WorldObjectPrefab, par).transform;
+                if (Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.right_weapon) != null)
+                    PrefabTransform = Instantiate(Unit[ListInfoNo].Equipment.GetItem(MechEquipment.MechSlot.right_weapon).WorldObjectPrefab, par).transform;
+                
+                if (PrefabTransform != null)
+                {
+                    PrefabTransform.localPosition = Vector3.zero;
+                    PrefabTransform.localScale = Vector3.zero;
+                }
+            }
+            return ListInfoNo;
+        }
+
         public void SaveUnitInfo()
         {
-            SaveUnitList.UnitList.Ally.AddRange(Unit);
+            //SaveUnitList.UnitList.Ally.AddRange(Unit);
+        }
+
+        public void DeleteUnitInfo(int i)
+        {
+            Unit.RemoveAt(i);
+            Debug.Log("Delete Unit info");
         }
 
         /// <summary>
         /// Clear Unit list information that user saved
         /// </summary>
-        public void ClearUnitInfo()
+        public void ClearUnitList()
         {
             Unit.Clear();
             Debug.Log("Init Unit Info");
@@ -219,7 +256,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(HeadList[h].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = part;
+                        PrefabTransform.SetParent(part);
                         PrefabTransform.localScale = Vector3.one;
                         PrefabTransform.localPosition = Vector3.zero;
                     }
@@ -232,7 +269,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(TorsoList[t].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = part;
+                        PrefabTransform.SetParent(part);
                         PrefabTransform.localScale = Vector3.one;
                         PrefabTransform.localPosition = Vector3.zero;
                     }
@@ -245,7 +282,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(ArmList[t].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = part;
+                        PrefabTransform.SetParent(part);
                         PrefabTransform.localScale = Vector3.one;
                         PrefabTransform.localPosition = Vector3.zero;
                     }
@@ -258,7 +295,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(LegList[t].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = part;
+                        PrefabTransform.SetParent(part);
                         PrefabTransform.localScale = Vector3.one;
                         PrefabTransform.localPosition = Vector3.zero;
                     }
@@ -271,7 +308,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(WeaponList[lw].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = part;
+                        PrefabTransform.SetParent(part);
                         PrefabTransform.localScale = Vector3.one;
                         PrefabTransform.localPosition = Vector3.zero;
                     }
@@ -284,7 +321,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(WeaponList[rw].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = part;
+                        PrefabTransform.SetParent(part);
                         PrefabTransform.localScale = Vector3.one;
                         PrefabTransform.localPosition = Vector3.zero;
                     }
@@ -311,7 +348,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(HeadList[h].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = transform.Find("head").Find("part");
+                        PrefabTransform.SetParent(transform.Find("head").Find("part"));
                         PrefabTransform.localPosition = Vector3.zero;
                         PrefabTransform.localScale = Vector3.one;
                     }
@@ -327,7 +364,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(TorsoList[t].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = transform.Find("torso").Find("part");
+                        PrefabTransform.SetParent(transform.Find("torso").Find("part"));
                         PrefabTransform.localPosition = new Vector3(0, 0, 0);
                         PrefabTransform.localScale = Vector3.one;
                     }
@@ -341,7 +378,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(ArmList[t].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = transform.Find("arm").Find("part");
+                        PrefabTransform.SetParent(transform.Find("arm").Find("part"));
                         PrefabTransform.localPosition = new Vector3(0, 0, 0);
                         PrefabTransform.localScale = Vector3.one;
                     }
@@ -357,7 +394,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(LegList[t].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = transform.Find("leg").Find("part");
+                        PrefabTransform.SetParent(transform.Find("leg").Find("part"));
                         PrefabTransform.localPosition = new Vector3(0, 0, 0);
                         PrefabTransform.localScale = Vector3.one;
                     }
@@ -371,7 +408,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(WeaponList[lw].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = transform.Find("left weapon").Find("part");
+                        PrefabTransform.SetParent(transform.Find("left weapon").Find("part"));
                         PrefabTransform.localPosition = new Vector3(0, 0, 0);
                         PrefabTransform.localScale = Vector3.one;
                     }
@@ -385,7 +422,7 @@ namespace ProjectCode
                     else
                     {
                         PrefabTransform = Instantiate(WeaponList[rw].WorldObjectPrefab).transform;
-                        PrefabTransform.parent = transform.Find("right weapon").Find("part");
+                        PrefabTransform.SetParent(transform.Find("right weapon").Find("part"));
                         PrefabTransform.localPosition = new Vector3(0, 0, 0);
                         PrefabTransform.localScale = Vector3.one;
                     }

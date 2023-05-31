@@ -102,6 +102,8 @@ namespace ProjectCode
                                 if (arrow == null)
                                 {
                                     Debug.Log("UI or Parts not selected");
+                                    if (check.name.Contains("List"))
+                                        Debug.Log(check.name + "selected");
                                 }
                                 else
                                 {
@@ -165,7 +167,7 @@ namespace ProjectCode
                     */
                 }
 
-                // If UI Image is filled than 'hitImgae' isn't null.
+                // If UI Image is filled than 'hitImage' isn't null.
                 Image hitImage = hitObject1.GetComponent<Image>();
                 if (hitImage == null)
                 {
