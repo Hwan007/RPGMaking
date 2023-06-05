@@ -13,10 +13,12 @@ namespace ProjectCode
         UnitInfo Character;
         Text info;
 
+        public Transform Popup;
+
         public GameObject NotEnoughParts;
         void Start()
         {
-            Character = GameObject.Find("Character").gameObject.GetComponent<UnitInfo>();
+            Character = GameObject.Find("Character Icon").gameObject.GetComponent<UnitInfo>();
             CameraRay = Camera.main.gameObject.GetComponent<CameraRay>();
         }
 
@@ -24,7 +26,7 @@ namespace ProjectCode
         {
             if (popup == true)
             {
-                if (transform.Find("popup").childCount == 0)
+                if (Popup.childCount == 0)
                     popup = false;
             }
         }
@@ -38,7 +40,7 @@ namespace ProjectCode
             if (ret == false && popup == false)
             {
                 GameObject Prefab = Instantiate(NotEnoughParts);
-                Prefab.transform.SetParent(transform.Find("popup"));
+                Prefab.transform.SetParent(Popup);
                 Prefab.transform.localPosition = Vector3.zero;
                 Prefab.transform.localScale = Vector3.one;
                 popup = true;
@@ -79,6 +81,11 @@ namespace ProjectCode
         public void ClearListBtn()
         {
             Character.ClearUnitList();
+            for(int i=0; i<=Lists.Count-1; i++)
+            {
+                Destroy(Lists[i].icon);
+            }
+            Lists.Clear();
         }
 
         public void RightArrowBtn()

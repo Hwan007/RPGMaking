@@ -169,6 +169,12 @@ namespace ProjectCode
                 ret = true;
             }
 
+            h = 0;
+            t = 0;
+            a = 0;
+            l = 0;
+            rw = 0;
+            lw = 0;
             return ret;
         }
 
